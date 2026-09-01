@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <!-- ===== تعريف الترميز ===== -->
+  <meta charset="UTF-8">
+  
+  <!-- ===== جعل الموقع متجاوب مع جميع الشاشات ===== -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  
+  <!-- ================================================================= -->
+  <!-- ===== أكواد السيو (SEO) لفهرسة جوجل ===== -->
+  <!-- ================================================================= -->
+  <title>المصحف الشريف | قراءة القرآن الكريم كاملاً</title>
+  <meta name="description" content="اقرأ القرآن الكريم كاملاً بالتشكيل بخط عربي واضح ومريح للعين. تصفح سور المصحف الشريف، مع إمكانية البحث الصوتي وتكبير الخط.">
+  <meta name="keywords" content="المصحف الشريف, القرآن الكريم, قراءة القرآن, سور القرآن, بحث في القرآن, آيات, إسلام">
+  <meta name="author" content="عبد الرحمن للخدمات الإسلامية">
+  
+  <!-- Open Graph / Facebook / WhatsApp -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="المصحف الشريف | عبد الرحمن للخدمات الإسلامية">
+  <meta property="og:description" content="اقرأ القرآن الكريم كاملاً بالتشكيل بخط عربي واضح ومريح للعين.">
+  <meta property="og:site_name" content="عبد الرحمن للخدمات الإسلامية">
+  
+  <!-- Schema.org for Google -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "المصحف الشريف",
+    "description": "قراءة القرآن الكريم كاملاً بالتشكيل بخط عربي واضح.",
+    "inLanguage": "ar",
+    "publisher": {
+      "@type": "Organization",
+      "name": "عبد الرحمن للخدمات الإسلامية"
+    }
+  }
+  </script>
+  <!-- ================================================================= -->
+
+  <!-- ===== خطوط جميلة من جوجل ===== -->
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=El+Messiri:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- ===== أيقونات فونت أويزوم ===== -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <style>
+    /* ===== إعادة ضبط كل العناصر ===== */
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    }
+    
+    /* ===== تنسيق الجسم الرئيسي ===== */
+    body {
+      font-family: 'El Messiri', sans-serif;  /* خط عربي جميل */
+      background: #0a0f1a;                    /* خلفية داكنة */
+      color: #e0e0e0;                         /* لون النص فاتح */
+      min-height: 100vh;
+      padding: 20px;
+      /* تأثير تدرج في الخلفية */
+      background-image: radial-gradient(ellipse at top, rgba(212,175,55,0.05), transparent 70%);
+    }
+    
+    /* ===== إخفاء شريط التمرير ===== */
+    * { scrollbar-width: none !important; }
+    ::-webkit-scrollbar { display: none !important; }
+    
+    /* ===== الحاوية الرئيسية ===== */
+    .app-container {
+      max-width: 900px;      /* أقصى عرض */
+      margin: 0 auto;        /* توسيط */
+    }
+    
+    /* ===== الهيدر الذهبي ===== */
+    .quran-header {
+      text-align: center;
+      padding: 30px 20px;
+      border-radius: 30px;
+      margin-bottom: 25px;
+      /* خلفية شفافة بتأثير زجاجي */
+      background: linear-gradient(145deg, rgba(212,175,55,0.06), rgba(255,255,255,0.02));
+      border: 1px solid rgba(212,175,55,0.12);
+    }
+    
+    /* ===== عنوان المصحف بتدرج ذهبي ===== */
+    .quran-header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #d4af37, #f9e076);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    /* ===== النص التحتي ===== */
+    .quran-header p {
+      color: rgba(255,255,255,0.5);
+      font-size: 15px;
+      margin-top: 5px;
+    }
+    
+    /* ===== الشاشات (تظهر وتختفي) ===== */
+    .screen {
+      display: none;              /* مخفية افتراضياً */
+      animation: fadeUp 0.4s ease; /* حركة ظهور جميلة */
+    }
+    .screen.active {
+      display: block;             /* تظهر عند إضافة كلاس active */
+    }
+    
+    /* ===== حركة الظهور ===== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* ===== صندوق البحث ===== */
+    .search-box {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 30px;
+      padding: 5px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    
+    /* ===== خانة الكتابة ===== */
+    .search-box input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 14px 20px;
+      color: #e0e0e0;
+      font-family: 'El Messiri', sans-serif;
+      font-size: 16px;
+      outline: none;
+    }
+    
+    /* ===== لون النص الإرشادي ===== */
+    .search-box input::placeholder {
+      color: rgba(255,255,255,0.3);
+    }
+    
+    /* ===== أزرار البحث والميكروفون ===== */
+    .search-box button {
+      background: rgba(212,175,55,0.15);
+      border: none;
+      border-radius: 25px;
+      padding: 0 18px;
+      color: #d4af37;
+      cursor: pointer;
+      font-size: 18px;
+      transition: 0.3s;
+    }
+    
+    /* ===== تأثير hover على الأزرار ===== */
+    .search-box button:hover {
+      background: rgba(212,175,55,0.3);
+    }
+    
+    /* ===== زر الميكروفون أثناء التسجيل ===== */
+    .search-box button#micBtn.recording {
+      background: #ff4444;
+      color: white;
+      animation: pulseMic 1s infinite;  /* حركة نبض */
+    }
+    
+    /* ===== حركة نبض الميكروفون ===== */
+    @keyframes pulseMic {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    
+    /* ===== حالة البحث الصوتي ===== */
+    #voiceStatus {
+      text-align: center;
+      font-size: 13px;
+      color: #d4af37;
+      margin-bottom: 10px;
+      min-height: 20px;
+    }
+    
+    /* ===== شبكة السور ===== */
+    .surah-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
+    }
+    
+    /* ===== بطاقة السورة ===== */
+    .surah-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 16px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    /* ===== تأثير hover على البطاقة ===== */
+    .surah-card:hover {
+      background: rgba(212,175,55,0.08);
+      border-color: rgba(212,175,55,0.3);
+      transform: translateY(-3px);   /* ارتفاع بسيط */
+    }
+    
+    /* ===== رقم السورة ===== */
+    .surah-card .number {
+      display: inline-block;
+      background: rgba(212,175,55,0.12);
+      color: #d4af37;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      line-height: 32px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    
+    /* ===== اسم السورة ===== */
+    .surah-card .name {
+      font-size: 17px;
+      font-weight: 600;
+      color: #f0f0f0;
+      margin-top: 5px;
+    }
+    
+    /* ===== اسم السورة بالإنجليزية ===== */
+    .surah-card .name-ar {
+      font-family: 'Amiri', serif;
+      font-size: 18px;
+      color: #d4af37;
+      display: block;
+    }
+    
+    /* ===== زر الرجوع ===== */
+    .back-btn {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 30px;
+      padding: 10px 20px;
+      color: #e0e0e0;
+      cursor: pointer;
+      font-family: 'El Messiri', sans-serif;
+      font-size: 14px;
+      margin-bottom: 15px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.3s;
+    }
+    
+    /* ===== تأثير hover على زر الرجوع ===== */
+    .back-btn:hover {
+      background: rgba(212,175,55,0.1);
+      border-color: #d4af37;
+    }
+    
+    /* ===== عنوان السورة ===== */
+    .surah-title {
+      text-align: center;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(212,175,55,0.1);
+    }
+    
+    /* ===== اسم السورة بالخط الأميري ===== */
+    .surah-title h2 {
+      font-size: 28px;
+      color: #d4af37;
+      font-family: 'Amiri', serif;
+    }
+    
+    /* ===== البسملة ===== */
+    .surah-title .bismillah {
+      font-family: 'Amiri', serif;
+      font-size: 22px;
+      color: rgba(255,255,255,0.4);
+      margin-top: 10px;
+      display: block;
+    }
+    
+    /* ===== نص الآيات ===== */
+    .aya-text {
+      font-family: 'Amiri', serif;
+      font-size: 22px;
+      line-height: 2.6;
+      color: #f0f0f0;
+      padding: 10px 5px;
+      text-align: right;
+    }
+    
+    /* ===== رقم الآية ===== */
+    .aya-text .aya-number {
+      color: #d4af37;
+      font-size: 14px;
+      margin: 0 6px;
+    }
+    
+    /* ===== أزرار التحكم في حجم الخط ===== */
+    .font-controls {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+    
+    /* ===== زر حجم الخط ===== */
+    .font-controls button {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      color: #e0e0e0;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: 'El Messiri', sans-serif;
+      font-size: 14px;
+    }
+    
+    /* ===== الزر النشط (المحدد) ===== */
+    .font-controls button.active {
+      background: #d4af37;
+      color: #0a0f1a;
+    }
+    
+    /* ===== أحجام الخطوط ===== */
+    .text-small .aya-text { font-size: 18px; }
+    .text-medium .aya-text { font-size: 22px; }
+    .text-large .aya-text { font-size: 28px; }
+    
+    /* ===== رسالة فاضية ===== */
+    .empty-msg {
+      text-align: center;
+      color: rgba(255,255,255,0.3);
+      padding: 60px 20px;
+      font-size: 18px;
+    }
+    
+    /* ===== زر الرجوع للرئيسية (أسفل يسار) ===== */
+    .home-btn {
+      position: fixed;
+      bottom: 25px;
+      left: 25px;
+      background: rgba(212,175,55,0.15);
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 50%;
+      width: 55px;
+      height: 55px;
+      color: #d4af37;
+      font-size: 22px;
+      cursor: pointer;
+      transition: 0.3s;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+    
+    /* ===== تأثير hover على زر الرئيسية ===== */
+    .home-btn:hover {
+      background: rgba(212,175,55,0.25);
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+  
+  <!-- ===== الهيدر ===== -->
+  <div class="quran-header">
+    <h1>📖 المصحف الشريف</h1>
+    <p>قراءة القرآن الكريم بخط واضح</p>
+  </div>
+
+  <!-- ================================================================= -->
+  <!-- ===== شاشة الفهرس (قائمة السور) ===== -->
+  <!-- ================================================================= -->
+  <div class="screen active" id="indexScreen">
+    
+    <!-- ===== صندوق البحث ===== -->
+    <div class="search-box">
+      <!-- خانة الكتابة -->
+      <input type="text" id="searchInput" placeholder="ابحث عن سورة..." onkeyup="filterSurahs()">
+      
+      <!-- زر الميكروفون (البحث الصوتي) -->
+      <button onclick="startVoiceSearch()" id="micBtn" title="بحث صوتي">
+        <i class="fas fa-microphone"></i>
+      </button>
+      
+      <!-- زر البحث العادي -->
+      <button onclick="filterSurahs()">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+    
+    <!-- ===== حالة البحث الصوتي ===== -->
+    <div id="voiceStatus"></div>
+    
+    <!-- ===== شبكة السور ===== -->
+    <div class="surah-grid" id="surahGrid">
+      <div class="empty-msg">⏳ جاري التحميل...</div>
+    </div>
+  </div>
+
+  <!-- ================================================================= -->
+  <!-- ===== شاشة عرض السورة (الآيات) ===== -->
+  <!-- ================================================================= -->
+  <div class="screen" id="surahScreen">
+    
+    <!-- ===== زر الرجوع ===== -->
+    <button class="back-btn" onclick="goBack()">
+      <i class="fas fa-arrow-right"></i> رجوع
+    </button>
+    
+    <!-- ===== أزرار التحكم في حجم الخط ===== -->
+    <div class="font-controls">
+      <button onclick="setFontSize('small')" id="fontSmall">ص</button>
+      <button onclick="setFontSize('medium')" id="fontMedium" class="active">م</button>
+      <button onclick="setFontSize('large')" id="fontLarge">ك</button>
+    </div>
+    
+    <!-- ===== عنوان السورة ===== -->
+    <div class="surah-title">
+      <h2 id="surahName">⏳ جاري التحميل...</h2>
+      <span class="bismillah" id="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span>
+    </div>
+    
+    <!-- ===== نص الآيات ===== -->
+    <div id="surahContent" class="text-medium">
+      <div class="aya-text" id="ayaText"></div>
+    </div>
+  </div>
+
+  <!-- ===== زر الرجوع للرئيسية ===== -->
+  <a href="index.html" class="home-btn" title="الرجوع للرئيسية">
+    <i class="fas fa-home"></i>
+  </a>
+</div>
+
+<!-- ================================================================= -->
+<!-- ===== Firebase للتتبع والإحصائيات (Firebase Analytics & Realtime DB) ===== -->
+<!-- ================================================================= -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics-compat.js"></script>
+
+<script>
+  // تهيئة فايربيس
+  const firebaseConfig = {
+    apiKey: "AIzaSyC9uyTILCMVlCeNNuVJvDjrQJ25bP3IHKA",
+    authDomain: "muslim-30567.firebaseapp.com",
+    databaseURL: "https://muslim-30567-default-rtdb.firebaseio.com",
+    projectId: "muslim-30567",
+    storageBucket: "muslim-30567.firebasestorage.app",
+    messagingSenderId: "477829492310",
+    appId: "1:477829492310:web:aa139ac9360fd9232a15f7",
+    measurementId: "G-8D34E6NGBF" // مُعرف Firebase Analytics
+  };
+  
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+  
+  const auth = firebase.auth();
+  const database = firebase.database();
+  const analytics = firebase.analytics(); // تفعيل Firebase Analytics لتتبع الزيارات العامة
+  
+  // نظام تتبع الوقت الذي يقضيه الزائر في قراءة المصحف
+  let visitStartTime = Date.now();
+  let visitorName = "زائر مجهول";
+  let visitorId = "anon_" + Math.random().toString(36).substring(2, 10);
+
+  // التعرف على المستخدم إذا كان مسجلاً (بدون طرد الزوار غير المسجلين)
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      visitorId = user.uid;
+      visitorName = user.displayName || user.email;
+    }
+  });
+
+  // حساب وإرسال وقت القراءة عند الخروج من الصفحة أو إغلاقها
+  document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === 'hidden') {
+      let timeSpentMs = Date.now() - visitStartTime;
+      let timeSpentSeconds = Math.floor(timeSpentMs / 1000);
+      
+      // تسجيل الوقت فقط إذا قضى أكثر من 5 ثوانٍ
+      if (timeSpentSeconds > 5) {
+        // 1. تسجيل في Realtime Database (للإحصائيات المخصصة الخاصة بك)
+        database.ref('analytics/mushaf_time').push({
+          uid: visitorId,
+          name: visitorName,
+          duration_seconds: timeSpentSeconds,
+          timestamp: firebase.database.ServerValue.TIMESTAMP,
+          date: new Date().toLocaleDateString('ar-EG')
+        });
+
+        // 2. تسجيل كـ Event مخصص في Firebase Analytics
+        analytics.logEvent('read_quran_duration', {
+          duration_seconds: timeSpentSeconds,
+          user_type: visitorName === "زائر مجهول" ? "anonymous" : "registered"
+        });
+      }
+    } else {
+      // إعادة تعيين العداد عند العودة للصفحة
+      visitStartTime = Date.now();
+    }
+  });
+</script>
+
+<!-- ================================================================= -->
+<!-- ===== جافا سكريبت ===== -->
+<!-- ================================================================= -->
+<script>
+  // ===== متغيرات عامة =====
+  let quranData = [];           // يحتوي على بيانات جميع السور
+  let recognition = null;       // للبحث الصوتي
+  let isRecording = false;     // حالة التسجيل
+
+  // =================================================================
+  // ===== 1. تحميل السور من API =====
+  // =================================================================
+  async function loadSurahs() {
+    try {
+      // جلب البيانات من API
+      const response = await fetch('https://api.alquran.cloud/v1/surah');
+      const data = await response.json();
+      
+      // تخزين البيانات في المتغير العام
+      quranData = data.data;
+      
+      // عرض السور
+      renderSurahs(quranData);
+      
+    } catch(error) {
+      // في حالة فشل التحميل
+      document.getElementById('surahGrid').innerHTML = 
+        '<div class="empty-msg">❌ فشل تحميل السور. تأكد من اتصالك بالإنترنت.</div>';
+    }
+  }
+
+  // =================================================================
+  // ===== 2. عرض السور في الشبكة =====
+  // =================================================================
+  function renderSurahs(surahs) {
+    const grid = document.getElementById('surahGrid');
+    
+    // لو مفيش نتائج
+    if (!surahs || surahs.length === 0) {
+      grid.innerHTML = '<div class="empty-msg">📭 لا توجد نتائج</div>';
+      return;
+    }
+    
+    // تحويل كل سورة إلى بطاقة HTML
+    grid.innerHTML = surahs.map(s => `
+      <div class="surah-card" onclick="loadSurah(${s.number})">
+        <div class="number">${s.number}</div>
+        <div class="name">${s.name}</div>
+        <div class="name-ar">${s.englishName}</div>
+      </div>
+    `).join('');
+  }
+
+  // =================================================================
+  // ===== 3. البحث في السور =====
+  // =================================================================
+  function filterSurahs() {
+    // جلب النص من خانة البحث
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    
+    // لو فاضي → عرض الكل
+    if (!query) {
+      renderSurahs(quranData);
+      return;
+    }
+    
+    // تصفية السور حسب الاسم أو الرقم
+    const filtered = quranData.filter(s => 
+      s.name.toLowerCase().includes(query) ||          // بالعربي
+      s.englishName.toLowerCase().includes(query) ||   // بالإنجليزي
+      s.number.toString().includes(query)              // بالرقم
+    );
+    
+    // عرض النتائج المصفاة
+    renderSurahs(filtered);
+  }
+
+  // =================================================================
+  // ===== 4. تحميل وعرض سورة معينة =====
+  // =================================================================
+  async function loadSurah(number) {
+    // ==== 4.1 التبديل للشاشة فوراً ====
+    document.getElementById('surahName').textContent = '⏳ جاري التحميل...';
+    document.getElementById('indexScreen').classList.remove('active');
+    document.getElementById('surahScreen').classList.add('active');
+    
+    try {
+      // ==== 4.2 جلب الآيات من API ====
+      const response = await fetch(`https://api.alquran.cloud/v1/surah/${number}`);
+      const data = await response.json();
+      const ayahs = data.data.ayahs;
+      
+      // ==== 4.3 جلب معلومات السورة ====
+      const info = quranData.find(s => s.number === number);
+      
+      // ==== 4.4 عرض اسم السورة ====
+      document.getElementById('surahName').textContent = `سورة ${info.name}`;
+      
+      // ==== 4.5 عرض البسملة (ما عدا سورة التوبة رقم 9) ====
+      const bismillah = document.getElementById('bismillah');
+      if (number === 9) {
+        bismillah.style.display = 'none';  // سورة التوبة مفيش بسملة
+      } else {
+        bismillah.style.display = 'block';
+        bismillah.textContent = 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ';
+      }
+      
+      // ==== 4.6 عرض الآيات مع أرقامها ====
+      document.getElementById('ayaText').innerHTML = ayahs.map((a, i) => 
+        `${a.text} <span class="aya-number">﴿${i+1}﴾</span>`
+      ).join(' ');
+      
+      // ==== 4.7 التمرير لأعلى الصفحة ====
+      window.scrollTo(0, 0);
+      
+    } catch(error) {
+      // ==== 4.8 في حالة حدوث خطأ ====
+      document.getElementById('surahName').textContent = '❌ خطأ في التحميل';
+      document.getElementById('ayaText').innerHTML = `
+        <div style="text-align:center; color:#ff6b6b; padding:40px;">
+          <i class="fas fa-exclamation-circle" style="font-size:40px; display:block; margin-bottom:15px;"></i>
+          فشل تحميل السورة.<br>
+          تأكد من اتصالك بالإنترنت وحاول مرة أخرى.
+          <br><br>
+          <button onclick="loadSurah(${number})" 
+                  style="background:#d4af37; color:#0a0f1a; border:none; border-radius:30px; 
+                         padding:10px 30px; cursor:pointer; font-family:'El Messiri'; font-size:16px;">
+            <i class="fas fa-redo"></i> إعادة المحاولة
+          </button>
+        </div>
+      `;
+    }
+  }
+
+  // =================================================================
+  // ===== 5. الرجوع للفهرس =====
+  // =================================================================
+  function goBack() {
+    document.getElementById('surahScreen').classList.remove('active');
+    document.getElementById('indexScreen').classList.add('active');
+  }
+
+  // =================================================================
+  // ===== 6. تغيير حجم الخط =====
+  // =================================================================
+  function setFontSize(size) {
+    // ==== 6.1 إزالة الكلاسات القديمة ====
+    const container = document.getElementById('surahContent');
+    container.classList.remove('text-small', 'text-medium', 'text-large');
+    
+    // ==== 6.2 إضافة الكلاس الجديد ====
+    container.classList.add(`text-${size}`);
+    
+    // ==== 6.3 تحديث الأزرار ====
+    document.querySelectorAll('.font-controls button').forEach(b => b.classList.remove('active'));
+    document.getElementById(`font${size.charAt(0).toUpperCase() + size.slice(1)}`).classList.add('active');
+  }
+
+  // =================================================================
+  // ===== 7. البحث الصوتي (الميكروفون) =====
+  // =================================================================
+  function startVoiceSearch() {
+    const micBtn = document.getElementById('micBtn');
+    const statusDiv = document.getElementById('voiceStatus');
+    
+    // ==== 7.1 التحقق من دعم المتصفح ====
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      statusDiv.textContent = '❌ متصفحك لا يدعم البحث الصوتي';
+      setTimeout(() => statusDiv.textContent = '', 3000);
+      return;
+    }
+    
+    // ==== 7.2 لو التسجيل شغال → أوقفه ====
+    if (recognition) {
+      recognition.stop();
+      recognition = null;
+      micBtn.classList.remove('recording');
+      statusDiv.textContent = '⏹️ تم إيقاف التسجيل';
+      setTimeout(() => statusDiv.textContent = '', 1500);
+      return;
+    }
+    
+    // ==== 7.3 بدء التسجيل ====
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognition = new SpeechRecognition();
+    recognition.lang = 'ar-EG';           // اللغة العربية
+    recognition.interimResults = false;   // النتيجة النهائية فقط
+    recognition.maxAlternatives = 1;      // أفضل نتيجة واحدة
+    
+    // ==== 7.4 عند بدء التسجيل ====
+    recognition.onstart = function() {
+      isRecording = true;
+      micBtn.classList.add('recording');
+      statusDiv.textContent = '🎙️ جاري الاستماع... تحدث الآن';
+    };
+    
+    // ==== 7.5 عند ظهور النتيجة ====
+    recognition.onresult = function(event) {
+      const text = event.results[0][0].transcript;
+      statusDiv.textContent = `📝 تم التعرف على: "${text}"`;
+      
+      // وضع النص في خانة البحث وتصفية السور
+      const searchInput = document.getElementById('searchInput');
+      searchInput.value = text;
+      filterSurahs();
+      
+      setTimeout(() => statusDiv.textContent = '', 3000);
+    };
+    
+    // ==== 7.6 عند حدوث خطأ ====
+    recognition.onerror = function(event) {
+      if (event.error === 'not-allowed') {
+        statusDiv.textContent = '❌ يرجى السماح للموقع باستخدام الميكروفون';
+      } else if (event.error === 'no-speech') {
+        statusDiv.textContent = '🔇 لم يتم سماع صوت، حاول مرة أخرى';
+      } else {
+        statusDiv.textContent = `❌ خطأ: ${event.error}`;
+      }
+      micBtn.classList.remove('recording');
+      recognition = null;
+      setTimeout(() => statusDiv.textContent = '', 3000);
+    };
+    
+    // ==== 7.7 عند انتهاء التسجيل ====
+    recognition.onend = function() {
+      micBtn.classList.remove('recording');
+      recognition = null;
+      isRecording = false;
+      if (statusDiv.textContent === '🎙️ جاري الاستماع... تحدث الآن') {
+        statusDiv.textContent = '⏹️ انتهى الاستماع';
+        setTimeout(() => statusDiv.textContent = '', 1500);
+      }
+    };
+    
+    // ==== 7.8 تشغيل ====
+    recognition.start();
+  }
+
+  // =================================================================
+  // ===== 8. تشغيل الموقع =====
+  // =================================================================
+  loadSurahs();
+</script>
+
+</body>
+</html>

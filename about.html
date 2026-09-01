@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  
+  <title>من نحن | عبد الرحمن للخدمات الإسلامية</title>
+  <meta name="description" content="تعرف على رؤية ورسالة منصة عبد الرحمن للخدمات الإسلامية، المنصة المتكاملة لخدمة المسلم المعاصر.">
+  <meta name="keywords" content="من نحن, عبد الرحمن, الخدمات الإسلامية, موقع مسلم, منصة إسلامية">
+  <meta name="author" content="عبد الرحمن روبي">
+  
+  <!-- ===== تأكيد ملكية الموقع في جوجل ===== -->
+  <meta name="google-site-verification" content="o1b5CZTx5fA8lSym_CS5Goo5olpOp4vtXiucq4n6riQ" />
+
+  <!-- الخطوط والأيقونات -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <style>
+    /* ========================================= */
+    /* ===== تصميم "الليل والذهب" الجديد ===== */
+    /* ========================================= */
+    
+    :root {
+      --bg-dark: #0f172a;        /* كحلي ليلي غامق */
+      --card-bg: #1e293b;        /* لون البطاقة */
+      --gold: #fbbf24;           /* ذهبي فخم */
+      --cyan: #38bdf8;           /* سماوي مريح */
+      --text-main: #f8fafc;      /* أبيض ساطع */
+      --text-muted: #94a3b8;     /* رمادي فاتح للنصوص الفرعية */
+      --border-glass: rgba(255, 255, 255, 0.08);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* إخفاء شريط التمرير */
+    ::-webkit-scrollbar { display: none; }
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--bg-dark);
+      background-image: radial-gradient(circle at top right, rgba(56, 189, 248, 0.05), transparent 40%),
+                        radial-gradient(circle at bottom left, rgba(251, 191, 36, 0.05), transparent 40%);
+      color: var(--text-main);
+      min-height: 100vh;
+      scrollbar-width: none;
+    }
+    
+    .app-wrapper {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    /* الهيدر وزر الرجوع */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--border-glass);
+    }
+    .header h1 {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-back {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-glass);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-back:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--cyan);
+    }
+    
+    /* البطاقة الرئيسية */
+    .about-card {
+      background: linear-gradient(145deg, var(--card-bg), rgba(30, 41, 59, 0.6));
+      border: 1px solid var(--border-glass);
+      border-radius: 24px;
+      padding: 28px 24px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    }
+    
+    /* الأقسام */
+    .section { margin-bottom: 24px; }
+    .section:last-child { margin-bottom: 0; }
+    
+    .section h3 {
+      color: var(--cyan);
+      font-size: 18px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section p {
+      color: var(--text-muted);
+      font-size: 14.5px;
+      line-height: 1.9;
+      text-align: justify;
+    }
+    
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-glass), transparent);
+      margin: 24px 0;
+    }
+    
+    /* شارة المطور */
+    .dev-badge {
+      background: rgba(56, 189, 248, 0.05);
+      border: 1px solid rgba(56, 189, 248, 0.15);
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .dev-badge::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 4px;
+      background: linear-gradient(90deg, var(--cyan), var(--gold));
+    }
+    .dev-badge i.fa-laptop-code {
+      font-size: 36px;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .dev-badge h4 { color: var(--text-main); font-size: 18px; }
+    .dev-badge p.name { color: var(--cyan); font-weight: bold; margin-bottom: 12px; }
+    .dev-badge .pray {
+      background: rgba(251, 191, 36, 0.1);
+      color: var(--gold);
+      padding: 10px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+    
+    /* أزرار التواصل */
+    .contact-title {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+    .btn-social {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 16px;
+      color: white;
+      font-family: 'Cairo', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .btn-social:hover { transform: translateY(-3px); }
+    
+    .btn-whatsapp {
+      background: linear-gradient(135deg, #10b981, #059669);
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.2);
+    }
+    .btn-youtube {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      box-shadow: 0 8px 20px rgba(239, 68, 68, 0.2);
+    }
+    
+  </style>
+</head>
+<body style="display: none;"> <!-- إخفاء المحتوى مؤقتاً لحين التحقق من تسجيل الدخول -->
+
+<div class="app-wrapper">
+  
+  <!-- الهيدر -->
+  <header class="header">
+    <h1><i class="fas fa-feather-alt"></i> من نحن</h1>
+    <button class="btn-back" onclick="window.location.href='index.html'">
+      <i class="fas fa-arrow-right"></i> عودة
+    </button>
+  </header>
+
+  <!-- بطاقة المحتوى -->
+  <div class="about-card">
+    
+    <!-- الرؤية -->
+    <div class="section">
+      <h3><i class="fas fa-mosque"></i> رؤيتنا ورسالتنا</h3>
+      <p>
+        منصة <strong>"عبد الرحمن للخدمات الإسلامية"</strong> هي تطبيق ويب متكامل تم تصميمه ليكون رفيقك الرقمي اليومي. نسعى لتقديم تجربة دينية سلسة وحديثة تجمع بين قراءة القرآن الكريم، الاستماع لكبار القراء، وتقديم أدوات ذكية تخدم المسلم المعاصر في كل مكان.
+      </p>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- المميزات -->
+    <div class="section">
+      <h3><i class="fas fa-gem"></i> لماذا هذه المنصة؟</h3>
+      <p>
+        بُنيت هذه المنصة بجهد خالص لتكون واحة رقمية خالية من المشتتات والإعلانات، بواجهة عصرية مريحة للعين، وسرعة تواكب أحدث التقنيات. لا نهدف للربح المادي، بل نسعى لأن تكون صدقة جارية وعلماً يُنتفع به.
+      </p>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- قسم المطور -->
+    <div class="section">
+      <div class="dev-badge">
+        <i class="fas fa-laptop-code"></i>
+        <h4>تطوير وتصميم</h4>
+        <p class="name">عبد الرحمن روبي</p>
+        <div class="pray">
+          🤲 نسألكم الدعاء لوالدته بالرحمة والمغفرة
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- التواصل -->
+    <div class="section">
+      <div class="contact-title">يسعدنا تواصلكم واقتراحاتكم</div>
+      <button class="btn-social btn-whatsapp" onclick="window.open('https://wa.me/201153297929', '_blank')">
+        <i class="fab fa-whatsapp" style="font-size: 20px;"></i> تواصل عبر واتساب
+      </button>
+      <button class="btn-social btn-youtube" onclick="window.open('https://youtube.com/channel/UC2k1P03gfQu_Ic759XaeYhw', '_blank')">
+        <i class="fab fa-youtube" style="font-size: 20px;"></i> تابعنا على يوتيوب
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ===== Firebase ===== -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
+<script>
+  // =============================================================
+  // ===== تهيئة Firebase والتحقق من تسجيل الدخول (Auth Guard) =====
+  // =============================================================
+  const firebaseConfig = {
+    apiKey: "AIzaSyC9uyTILCMVlCeNNuVJvDjrQJ25bP3IHKA",
+    authDomain: "muslim-30567.firebaseapp.com",
+    projectId: "muslim-30567",
+    appId: "1:477829492310:web:aa139ac9360fd9232a15f7"
+  };
+  
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      // المستخدم مسجل دخول -> إظهار الصفحة
+      document.body.style.display = 'block';
+    } else {
+      // المستخدم غير مسجل دخول -> توجيه للصفحة الرئيسية
+      window.location.replace('index.html'); 
+    }
+  });
+</script>
+
+</body>
+</html>

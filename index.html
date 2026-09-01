@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  
+  <title>عبد الرحمن | الخدمات الإسلامية</title>
+  
+  <meta name="description" content="عبد الرحمن للخدمات الإسلامية - منصة إسلامية متكاملة لخدمة المسلمين: قراءة وتفسير القرآن الكريم، الاستماع لكبار القراء، حصن المسلم، الأحاديث النبوية، ودردشة ومكالمات مباشرة.">
+  
+  <meta name="keywords" content="عبد الرحمن, الخدمات الإسلامية, موقع مسلم, قرآن, قراء, تفسير, حصن المسلم, أحاديث, إسلام, منصة إسلامية">
+  <meta name="author" content="عبد الرحمن روبي">
+  
+  <meta property="og:title" content="عبد الرحمن | الخدمات الإسلامية">
+  <meta property="og:description" content="عبد الرحمن للخدمات الإسلامية - منصة إسلامية متكاملة لخدمة المسلمين: قراءة وتفسير القرآن الكريم، الاستماع لكبار القراء، حصن المسلم، الأحاديث النبوية، ودردشة ومكالمات مباشرة.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://muslim-two.vercel.app">
+  <meta property="og:site_name" content="عبد الرحمن للخدمات الإسلامية">
+  <meta property="og:image" content="https://muslim-two.vercel.app/favicon.png">
+  <meta property="og:image:width" content="512">
+  <meta property="og:image:height" content="512">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="عبد الرحمن | الخدمات الإسلامية">
+  <meta name="twitter:description" content="عبد الرحمن للخدمات الإسلامية - منصة إسلامية متكاملة لخدمة المسلمين">
+  <meta name="twitter:image" content="https://muslim-two.vercel.app/favicon.png">
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://muslim-two.vercel.app/#website",
+        "url": "https://muslim-two.vercel.app/",
+        "name": "عبد الرحمن للخدمات الإسلامية",
+        "description": "عبد الرحمن للخدمات الإسلامية - منصة إسلامية متكاملة لخدمة المسلمين: قراءة وتفسير القرآن الكريم، الاستماع لكبار القراء، حصن المسلم، الأحاديث النبوية، ودردشة ومكالمات مباشرة.",
+        "publisher": {
+          "@id": "https://muslim-two.vercel.app/#author"
+        },
+        "inLanguage": "ar"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://muslim-two.vercel.app/#author",
+        "name": "عبد الرحمن",
+        "jobTitle": "Full Stack Developer",
+        "url": "https://github.com/Abdo011-ops"
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://muslim-two.vercel.app/#organization",
+        "name": "عبد الرحمن للخدمات الإسلامية",
+        "url": "https://muslim-two.vercel.app/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://muslim-two.vercel.app/favicon.png"
+        },
+        "sameAs": [
+          "https://www.facebook.com/share/1DvSFCtmyo/",
+          "https://wa.me/201153297929",
+          "https://youtube.com/channel/UC2k1P03gfQu_Ic759XaeYhw"
+        ]
+      }
+    ]
+  }
+  </script>
+  
+  <meta name="google-site-verification" content="o1b5CZTx5fA8lSym_CS5Goo5olpOp4vtXiucq4n6riQ" />
+  
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <!-- ===== ملف التصميم الخارجي ===== -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ===== توست الإشعارات ===== -->
+<div class="toast" id="toast"></div>
+
+<!-- ===== التطبيق ===== -->
+<div class="app-wrapper">
+
+  <!-- ===== شاشة الدخول ===== -->
+  <div class="screen active" id="authScreen">
+    <div class="auth-screen">
+      <div class="auth-card">
+        <div class="logo-area">
+          <span class="logo-icon"><i class="fas fa-moon"></i></span>
+          <h2 id="authTitle">مرحباً بك</h2>
+          <p class="subtitle" id="authSubtitle">سجل دخولك للمتابعة</p>
+        </div>
+        
+        <div class="error-msg" id="authError"></div>
+        
+        <input type="text" id="authName" placeholder="👤 الاسم الكامل" class="hidden">
+        <input type="tel" id="authPhone" placeholder="📱 رقم التليفون" class="hidden">
+        <input type="email" id="authEmail" placeholder="📧 البريد الإلكتروني">
+        <input type="password" id="authPassword" placeholder="🔒 كلمة المرور">
+        
+        <button class="btn-primary" id="authMainBtn" onclick="handleAuth()">دخول</button>
+        
+        <div class="divider">أو</div>
+        
+        <div class="social-group">
+          <button class="social-btn google" id="googleBtn" onclick="signInWithGoogle()">
+            <i class="fab fa-google"></i> <span id="googleText">جوجل</span>
+          </button>
+          <button class="social-btn facebook" id="facebookBtn" onclick="signInWithFacebook()">
+            <i class="fab fa-facebook"></i> <span id="facebookText">فيسبوك</span>
+          </button>
+        </div>
+        
+        <button class="switch-link" id="authSwitchBtn" onclick="toggleAuthMode()">ليس لديك حساب؟ سجل الآن</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== الشاشة الرئيسية ===== -->
+  <div class="screen" id="homeScreen">
+    
+    <header class="main-header">
+      <div class="brand">
+        <i class="fas fa-moon"></i>
+        <span id="brandName">مسلم</span>
+      </div>
+      
+      <div class="header-actions">
+        <button class="lang-btn" id="langBtn" onclick="toggleLanguage()">
+          <i class="fas fa-globe"></i>
+          <span id="langText">EN</span>
+        </button>
+        
+        <button class="profile-trigger" id="profileBtn" onclick="showScreen('profileScreen')">
+          <i class="fas fa-user-circle"></i>
+          <span id="profileName">الحساب</span>
+        </button>
+      </div>
+    </header>
+    
+    <div class="welcome-banner">
+      <div class="greeting">
+        <span id="welcomeText">السلام عليكم</span> 👋 
+        <span id="userGreeting">مسلم</span>
+      </div>
+      <div class="sub-text" id="subText">📿 مرحباً بك في منصة الخدمات الإسلامية</div>
+    </div>
+    
+    <div class="services-grid">
+    <div class="service-card" onclick="navigateTo('ahadith.html')">
+        <div class="icon-wrap blue"><i class="fas fa-book-open"></i></div>
+        <span class="label" id="ahadithText">الأحاديث</span>
+      <span class="badge"><img src="favicon.png" style="width: 18px; height: 18px; vertical-align: middle;"></span>
+      </div>
+     <div class="service-card" onclick="window.location.href='Salaty.html'">
+    <div class="icon-wrap"><i class="fas fa-mosque"></i></div>
+    <span class="label">صلاتي</span>
+   <span class="badge"><img src="favicon.png" style="width: 18px; height: 18px; vertical-align: middle;"></span>
+</div>
+      <div class="service-card inactive">
+        <div class="icon-wrap"><i class="fas fa-star"></i></div>
+        <span class="label" id="soon3">قريباً</span>
+      <span class="badge"><img src="favicon.png" style="width: 18px; height: 18px; vertical-align: middle;"></span>
+      </div>
+      <div class="service-card" onclick="navigateTo('mushaf.html')">
+        <div class="icon-wrap green"><i class="fas fa-book-quran"></i></div>
+        <span class="label" id="mushafText">المصحف</span>
+        <span class="badge">📖</span>
+      </div>
+      <div class="service-card" onclick="navigateTo('readers.html')">
+        <div class="icon-wrap purple"><i class="fas fa-microphone-alt"></i></div>
+        <span class="label" id="readersText">القراء</span>
+        <span class="badge">🎙️</span>
+      </div>
+      <div class="service-card" onclick="showPopup('morePopup')">
+        <div class="icon-wrap gold"><i class="fas fa-th-large"></i></div>
+        <span class="label" id="moreText">المزيد</span>
+        <span class="badge">✨</span>
+      </div>
+    </div>
+    
+    <footer class="main-footer">
+      <div class="verse">"<span>فَإِذَا جَاءَ أَمْرُ اللَّهِ قُضِيَ بِالْحَقِّ</span>"</div>
+      <div class="social-row">
+        <a href="https://wa.me/201153297929" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp">
+        </a>
+        <a href="https://www.facebook.com/share/1DvSFCtmyo/" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
+        </a>
+        <a href="https://youtube.com/channel/UC2k1P03gfQu_Ic759XaeYhw" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">
+        </a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ===== شاشة البروفايل ===== -->
+  <div class="screen" id="profileScreen">
+    <div class="profile-card">
+      <div class="avatar-wrap">
+        <i class="fas fa-user-astronaut" id="defaultAvatarIcon"></i>
+        <img id="realProfileImage" src="" alt="صورة الحساب" style="display: none; width: 85px; height: 85px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); padding: 3px; margin: 0 auto; background: rgba(0, 184, 148, 0.08);">
+      </div>
+      
+      <label id="nameLabel"><i class="fas fa-user"></i> الاسم</label>
+      <input type="text" id="profileNameField" placeholder="اسمك">
+      
+      <label id="phoneLabel"><i class="fas fa-phone"></i> رقم التليفون</label>
+      <input type="text" id="profilePhoneField" placeholder="غير مسجل" disabled>
+      <span class="hint" id="phoneHint">🔒 لا يمكن تعديل رقم التليفون</span>
+      
+      <hr class="divider-line">
+      
+      <label id="passLabel"><i class="fas fa-lock"></i> تغيير كلمة المرور</label>
+      <input type="password" id="profileOldPassword" placeholder="كلمة المرور الحالية">
+      <input type="password" id="profileNewPassword" placeholder="كلمة المرور الجديدة">
+      <span class="hint" id="passHint">📌 6 أحرف على الأقل</span>
+      
+      <div class="btn-group">
+        <button class="btn-whatsapp" id="supportBtn" onclick="showPopup('requestsPopup')">
+          <i class="fab fa-whatsapp"></i> <span id="supportBtnText">الدعم الفني</span>
+        </button>
+        <button class="btn-save" id="saveBtn" onclick="updateProfile()">
+          <i class="fas fa-save"></i> <span id="saveBtnText">حفظ التغييرات</span>
+        </button>
+        <button class="btn-about" id="aboutBtn" onclick="navigateTo('about.html')" style="background: linear-gradient(135deg, var(--secondary), var(--secondary-light)); color: white;">
+          <i class="fas fa-info-circle"></i> <span id="aboutBtnText">من نحن</span>
+        </button>
+        <button class="btn-youtube" id="youtubeBtn" onclick="navigateTo('youtube.html')">
+          <i class="fab fa-youtube"></i> <span id="youtubeBtnText">يوتيوب</span>
+        </button>
+        <button class="btn-logout" id="logoutBtn" onclick="logoutUser()">
+          <i class="fas fa-sign-out-alt"></i> <span id="logoutBtnText">تسجيل الخروج</span>
+        </button>
+        <button class="btn-back" id="backBtn" onclick="showScreen('homeScreen')">
+          <i class="fas fa-arrow-left"></i> <span id="backBtnText">رجوع</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== نافذة المزيد ===== -->
+  <div class="popup-overlay" id="morePopup">
+    <div class="popup-box">
+      <span class="popup-icon">✨</span>
+      <h3 id="morePopupTitle">خدمات إضافية</h3>
+      <p id="morePopupText">اختر الخدمة التي تريدها</p>
+      
+      <button class="item-btn" onclick="closePopup('morePopup'); navigateTo('videos.html')">
+        <i class="fas fa-video" style="color: #a29bfe;"></i> <span id="videosText">الفيديوهات</span>
+      </button>
+      <button class="item-btn" onclick="closePopup('morePopup'); navigateTo('youtube.html')">
+        <i class="fab fa-youtube" style="color: #fd79a8;"></i> <span id="youtubeMoreText">يوتيوب الذكية</span>
+      </button>
+      <button class="item-btn" onclick="closePopup('morePopup'); navigateTo('ai-model.html')">
+        <i class="fas fa-wand-magic-sparkles" style="color: #fdcb6e;"></i> <span id="aiText">الذكاء الاصطناعي</span>
+      </button>
+      
+      <button class="item-btn close-item" onclick="closePopup('morePopup')">
+        <i class="fas fa-times"></i> <span id="closeText">إغلاق</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== نافذة الدعم ===== -->
+  <div class="popup-overlay" id="requestsPopup">
+    <div class="popup-box">
+      <span class="popup-icon">🛠️</span>
+      <h3 id="supportTitle">الدعم الفني</h3>
+      <p id="supportSub">اختر نوع المشكلة</p>
+      
+      <button class="item-btn" onclick="sendWhatsApp('مشكلة في الموقع')">
+        <i class="fas fa-exclamation-triangle" style="color: #fd79a8;"></i> <span id="prob1">مشكلة في الموقع</span>
+      </button>
+      <button class="item-btn" onclick="sendWhatsApp('مشكلة في الحساب')">
+        <i class="fas fa-user-lock" style="color: #fdcb6e;"></i> <span id="prob2">مشكلة في الحساب</span>
+      </button>
+      <button class="item-btn" onclick="sendWhatsApp('اقتراح لتطوير الموقع')">
+        <i class="fas fa-lightbulb" style="color: #55efc4;"></i> <span id="prob3">اقتراح أو طلب جديد</span>
+      </button>
+      <button class="item-btn" onclick="sendWhatsApp('شكوى ضد مستخدم')">
+        <i class="fas fa-flag" style="color: #fd79a8;"></i> <span id="prob4">شكوى ضد مستخدم</span>
+      </button>
+      
+      <button class="item-btn close-item" onclick="closePopup('requestsPopup')">
+        <i class="fas fa-times"></i> <span id="closeSupport">إغلاق</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== نافذة الترحيب ===== -->
+  <div class="popup-overlay" id="welcomePopup">
+    <div class="popup-box">
+      <span class="popup-icon">🌙</span>
+      <h3 id="welcomeTitle">أهلاً بك</h3>
+      <p id="welcomeDesc">
+        منصة <span class="highlight">عبد الرحمن</span> للخدمات الإسلامية<br>
+        من تصميم <span class="highlight">عبد الرحمن روبي</span><br><br>
+        🤲 أدعو لوالدته بالرحمة والمغفرة
+      </p>
+      <button class="popup-btn" id="welcomeBtn" onclick="closePopup('welcomePopup')">ابدأ</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ========================================================== -->
+<!-- ===== Firebase ===== -->
+<!-- ========================================================== -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+<script>
+  // ===== تهيئة Firebase =====
+  const firebaseConfig = {
+    apiKey: "AIzaSyC9uyTILCMVlCeNNuVJvDjrQJ25bP3IHKA",
+    authDomain: "muslim-30567.firebaseapp.com",
+    databaseURL: "https://muslim-30567-default-rtdb.firebaseio.com",
+    projectId: "muslim-30567",
+    storageBucket: "muslim-30567.firebasestorage.app",
+    messagingSenderId: "477829492310",
+    appId: "1:477829492310:web:aa139ac9360fd9232a15f7"
+  };
+  
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const database = firebase.database();
+  
+  let currentUser = null;
+  let isLoginMode = true;
+  let currentLang = 'ar';
+  
+  function navigateTo(url) {
+    window.removeEventListener('beforeunload', beforeUnloadHandler);
+    window.location.href = url;
+  }
+  
+  const translations = {
+    ar: {
+      brandName: 'مسلم',
+      authTitle: 'مرحباً بك',
+      authSubtitle: 'سجل دخولك للمتابعة',
+      authLogin: 'دخول',
+      authSignup: 'تسجيل',
+      authSwitchLogin: 'ليس لديك حساب؟ سجل الآن',
+      authSwitchSignup: 'لديك حساب؟ سجل دخول',
+      google: 'جوجل',
+      facebook: 'فيسبوك',
+      emailPlaceholder: '📧 البريد الإلكتروني',
+      passwordPlaceholder: '🔒 كلمة المرور',
+      namePlaceholder: '👤 الاسم الكامل',
+      phonePlaceholder: '📱 رقم التليفون',
+      welcome: 'السلام عليكم',
+      subText: '📿 مرحباً بك في منصة الخدمات الإسلامية',
+      soon: 'قريباً',
+      mushaf: 'المصحف',
+      readers: 'القراء',
+      more: 'المزيد',
+      nameLabel: 'الاسم',
+      phoneLabel: 'رقم التليفون',
+      phoneHint: '🔒 لا يمكن تعديل رقم التليفون',
+      passLabel: 'تغيير كلمة المرور',
+      passHint: '📌 6 أحرف على الأقل',
+      youtubeBtn: 'يوتيوب',
+      supportBtn: 'الدعم الفني',
+      saveBtn: 'حفظ التغييرات',
+      logoutBtn: 'تسجيل الخروج',
+      backBtn: 'رجوع',
+      moreTitle: 'خدمات إضافية',
+      moreText: 'اختر الخدمة التي تريدها',
+      videos: 'الفيديوهات',
+      youtubeMore: 'يوتيوب الذكية',
+      ai: 'الذكاء الاصطناعي',
+      close: 'إغلاق',
+      supportTitle: 'الدعم الفني',
+      supportSub: 'اختر نوع المشكلة',
+      prob1: 'مشكلة في الموقع',
+      prob2: 'مشكلة في الحساب',
+      prob3: 'اقتراح أو طلب جديد',
+      prob4: 'شكوى ضد مستخدم',
+      closeSupport: 'إغلاق',
+      welcomeTitle: 'أهلاً بك',
+      welcomeDesc: 'منصة عبد الرحمن للخدمات الإسلامية\nمن تصميم عبد الرحمن روبي\n\n🤲 أدعو لوالدته بالرحمة والمغفرة',
+      welcomeBtn: 'ابدأ',
+      profile: 'الحساب',
+      langBtn: 'EN',
+      errorFill: '⚠️ املأ البريد وكلمة المرور',
+      errorName: '⚠️ أدخل اسمك',
+      errorPhone: '⚠️ أدخل رقم تليفونك',
+      errorPass: '⚠️ كلمة المرور 6 أحرف على الأقل',
+      errorLogin: '❌ خطأ في الدخول',
+      errorNotRegistered: '❌ البريد غير مسجل',
+      errorWrongPass: '❌ كلمة المرور غير صحيحة',
+      errorSignup: '❌ خطأ في التسجيل',
+      errorExists: '❌ البريد مسجل بالفعل',
+      errorPopup: '⚠️ يرجى السماح بالنوافذ المنبثقة',
+      errorAccountExists: '⚠️ هذا البريد مسجل بطريقة أخرى',
+      successWelcome: '👋 مرحباً بك',
+      successSignup: '✅ تم التسجيل بنجاح',
+      successGoogle: '✅ تم الدخول بجوجل',
+      successFacebook: '✅ تم الدخول بفيسبوك',
+      successUpdate: '✅ تم التحديث',
+      successLogout: '👋 تم الخروج',
+      successWhatsApp: '📤 تم التوجيه للواتساب'
+    },
+    en: {
+      brandName: 'Muslim',
+      authTitle: 'Welcome',
+      authSubtitle: 'Sign in to continue',
+      authLogin: 'Login',
+      authSignup: 'Sign Up',
+      authSwitchLogin: "Don't have an account? Sign up",
+      authSwitchSignup: 'Have an account? Login',
+      google: 'Google',
+      facebook: 'Facebook',
+      emailPlaceholder: '📧 Email',
+      passwordPlaceholder: '🔒 Password',
+      namePlaceholder: '👤 Full Name',
+      phonePlaceholder: '📱 Phone Number',
+      welcome: 'Welcome',
+      subText: '📿 Welcome to the Islamic Services Platform',
+      soon: 'Soon',
+      mushaf: 'Mushaf',
+      readers: 'Reciters',
+      more: 'More',
+      nameLabel: 'Name',
+      phoneLabel: 'Phone Number',
+      phoneHint: '🔒 Phone number cannot be changed',
+      passLabel: 'Change Password',
+      passHint: '📌 At least 6 characters',
+      youtubeBtn: 'YouTube',
+      supportBtn: 'Support',
+      saveBtn: 'Save Changes',
+      logoutBtn: 'Logout',
+      backBtn: 'Back',
+      moreTitle: 'More Services',
+      moreText: 'Choose the service you want',
+      videos: 'Videos',
+      youtubeMore: 'Smart YouTube',
+      ai: 'AI Assistant',
+      close: 'Close',
+      supportTitle: 'Support',
+      supportSub: 'Choose your issue',
+      prob1: 'Website Issue',
+      prob2: 'Account Issue',
+      prob3: 'Suggestion or Request',
+      prob4: 'Report User',
+      closeSupport: 'Close',
+      welcomeTitle: 'Welcome',
+      welcomeDesc: 'Abdulrahman Islamic Services Platform\nDesigned by Abdulrahman Roby\n\n🤲 Pray for his mother\'s mercy',
+      welcomeBtn: 'Start',
+      profile: 'Profile',
+      langBtn: 'عربي',
+      errorFill: '⚠️ Fill in email and password',
+      errorName: '⚠️ Enter your name',
+      errorPhone: '⚠️ Enter your phone number',
+      errorPass: '⚠️ Password must be at least 6 characters',
+      errorLogin: '❌ Login error',
+      errorNotRegistered: '❌ Email not registered',
+      errorWrongPass: '❌ Incorrect password',
+      errorSignup: '❌ Signup error',
+      errorExists: '❌ Email already registered',
+      errorPopup: '⚠️ Please allow popups',
+      errorAccountExists: '⚠️ This email is registered with another method',
+      successWelcome: '👋 Welcome',
+      successSignup: '✅ Signup successful',
+      successGoogle: '✅ Logged in with Google',
+      successFacebook: '✅ Logged in with Facebook',
+      successUpdate: '✅ Updated successfully',
+      successLogout: '👋 Logged out',
+      successWhatsApp: '📤 Redirected to WhatsApp'
+    }
+  };
+  
+  function toggleLanguage() {
+    currentLang = currentLang === 'ar' ? 'en' : 'ar';
+    updateUI();
+    document.getElementById('langText').textContent = currentLang === 'ar' ? 'EN' : 'عربي';
+    localStorage.setItem('appLang', currentLang);
+  }
+  
+  function updateUI() {
+    const t = translations[currentLang];
+    
+    document.getElementById('brandName').textContent = t.brandName;
+    document.getElementById('authTitle').textContent = t.authTitle;
+    document.getElementById('authSubtitle').textContent = t.authSubtitle;
+    document.getElementById('authMainBtn').textContent = isLoginMode ? t.authLogin : t.authSignup;
+    document.getElementById('authSwitchBtn').textContent = isLoginMode ? t.authSwitchLogin : t.authSwitchSignup;
+    document.getElementById('googleText').textContent = t.google;
+    document.getElementById('facebookText').textContent = t.facebook;
+    document.getElementById('authEmail').placeholder = t.emailPlaceholder;
+    document.getElementById('authPassword').placeholder = t.passwordPlaceholder;
+    document.getElementById('authName').placeholder = t.namePlaceholder;
+    document.getElementById('authPhone').placeholder = t.phonePlaceholder;
+    
+    document.getElementById('welcomeText').textContent = t.welcome;
+    document.getElementById('subText').textContent = t.subText;
+    document.getElementById('soon3').textContent = t.soon;
+    document.getElementById('mushafText').textContent = t.mushaf;
+    document.getElementById('readersText').textContent = t.readers;
+    document.getElementById('moreText').textContent = t.more;
+    
+    if (currentUser && currentUser.displayName) {
+      document.getElementById('profileName').textContent = currentUser.displayName.split(' ')[0];
+    } else {
+      document.getElementById('profileName').textContent = t.profile;
+    }
+    
+    document.getElementById('nameLabel').innerHTML = '<i class="fas fa-user"></i> ' + t.nameLabel;
+    document.getElementById('phoneLabel').innerHTML = '<i class="fas fa-phone"></i> ' + t.phoneLabel;
+    document.getElementById('phoneHint').textContent = t.phoneHint;
+    document.getElementById('passLabel').innerHTML = '<i class="fas fa-lock"></i> ' + t.passLabel;
+    document.getElementById('passHint').textContent = t.passHint;
+    document.getElementById('youtubeBtnText').textContent = t.youtubeBtn;
+    document.getElementById('supportBtnText').textContent = t.supportBtn;
+    document.getElementById('saveBtnText').textContent = t.saveBtn;
+    document.getElementById('logoutBtnText').textContent = t.logoutBtn;
+    document.getElementById('backBtnText').textContent = t.backBtn;
+    
+    document.getElementById('morePopupTitle').textContent = t.moreTitle;
+    document.getElementById('morePopupText').textContent = t.moreText;
+    document.getElementById('videosText').textContent = t.videos;
+    document.getElementById('youtubeMoreText').textContent = t.youtubeMore;
+    document.getElementById('aiText').textContent = t.ai;
+    document.getElementById('closeText').textContent = t.close;
+    
+    document.getElementById('supportTitle').textContent = t.supportTitle;
+    document.getElementById('supportSub').textContent = t.supportSub;
+    document.getElementById('prob1').textContent = t.prob1;
+    document.getElementById('prob2').textContent = t.prob2;
+    document.getElementById('prob3').textContent = t.prob3;
+    document.getElementById('prob4').textContent = t.prob4;
+    document.getElementById('closeSupport').textContent = t.closeSupport;
+    
+    document.getElementById('welcomeTitle').textContent = t.welcomeTitle;
+    document.getElementById('welcomeDesc').innerHTML = t.welcomeDesc.replace(/\n/g, '<br>');
+    document.getElementById('welcomeBtn').textContent = t.welcomeBtn;
+    
+    if (currentLang === 'ar') {
+      document.documentElement.dir = 'rtl';
+      document.documentElement.lang = 'ar';
+    } else {
+      document.documentElement.dir = 'ltr';
+      document.documentElement.lang = 'en';
+    }
+  }
+  
+  const savedLang = localStorage.getItem('appLang');
+  if (savedLang) {
+    currentLang = savedLang;
+    document.getElementById('langText').textContent = currentLang === 'ar' ? 'EN' : 'عربي';
+  }
+  
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    if (id === 'profileScreen' || id === 'homeScreen') {
+      window.history.pushState({ screen: id }, '', window.location.href);
+    }
+  }
+  
+  window.addEventListener('popstate', function(event) {
+    const activeScreen = document.querySelector('.screen.active');
+    if (activeScreen) {
+      const id = activeScreen.id;
+      if (id === 'profileScreen') {
+        showScreen('homeScreen');
+        event.preventDefault();
+        return false;
+      }
+      if (id === 'homeScreen') {
+        window.history.pushState({ screen: 'homeScreen' }, '', window.location.href);
+        event.preventDefault();
+        return false;
+      }
+    }
+  });
+  
+  function beforeUnloadHandler(e) {
+    e.preventDefault();
+    e.returnValue = 'هل أنت متأكد من الخروج؟ قد لا يتم حفظ التغييرات.';
+    return e.returnValue;
+  }
+  
+  window.addEventListener('beforeunload', beforeUnloadHandler);
+  
+  function showPopup(id) {
+    document.getElementById(id).classList.add('show');
+  }
+  
+  function closePopup(id) {
+    document.getElementById(id).classList.remove('show');
+  }
+  
+  function toggleAuthMode() {
+    isLoginMode = !isLoginMode;
+    const t = translations[currentLang];
+    document.getElementById('authTitle').textContent = isLoginMode ? t.authTitle : 'حساب جديد';
+    document.getElementById('authSubtitle').textContent = isLoginMode ? t.authSubtitle : 'أنشئ حسابك الآن';
+    document.getElementById('authMainBtn').textContent = isLoginMode ? t.authLogin : t.authSignup;
+    document.getElementById('authSwitchBtn').textContent = isLoginMode ? t.authSwitchLogin : t.authSwitchSignup;
+    
+    document.getElementById('authName').classList.toggle('hidden', isLoginMode);
+    document.getElementById('authPhone').classList.toggle('hidden', isLoginMode);
+    document.getElementById('authError').style.display = 'none';
+  }
+  
+  function handleAuth() {
+    const email = document.getElementById('authEmail').value.trim();
+    const password = document.getElementById('authPassword').value.trim();
+    const name = document.getElementById('authName').value.trim();
+    const phone = document.getElementById('authPhone').value.trim();
+    const errorDiv = document.getElementById('authError');
+    const t = translations[currentLang];
+    
+    if (!email || !password) {
+      errorDiv.textContent = t.errorFill;
+      errorDiv.style.display = 'block';
+      return;
+    }
+    
+    if (isLoginMode) {
+      auth.signInWithEmailAndPassword(email, password)
+        .then(() => { showToast(t.successWelcome); errorDiv.style.display = 'none'; })
+        .catch((error) => {
+          let msg = t.errorLogin;
+          if (error.code === 'auth/user-not-found') msg = t.errorNotRegistered;
+          else if (error.code === 'auth/wrong-password') msg = t.errorWrongPass;
+          else msg = '❌ ' + error.message;
+          errorDiv.textContent = msg;
+          errorDiv.style.display = 'block';
+        });
+    } else {
+      if (!name) { errorDiv.textContent = t.errorName; errorDiv.style.display = 'block'; return; }
+      if (!phone) { errorDiv.textContent = t.errorPhone; errorDiv.style.display = 'block'; return; }
+      if (password.length < 6) { errorDiv.textContent = t.errorPass; errorDiv.style.display = 'block'; return; }
+      
+      auth.createUserWithEmailAndPassword(email, password)
+        .then((result) => result.user.updateProfile({ displayName: name }))
+        .then(() => {
+          const user = auth.currentUser;
+          return database.ref('users/' + user.uid).set({ name, email, phone, createdAt: Date.now() });
+        })
+        .then(() => { showToast(t.successSignup); errorDiv.style.display = 'none'; })
+        .catch((error) => {
+          let msg = t.errorSignup;
+          if (error.code === 'auth/email-already-in-use') msg = t.errorExists;
+          else msg = '❌ ' + error.message;
+          errorDiv.textContent = msg;
+          errorDiv.style.display = 'block';
+        });
+    }
+  }
+  
+  function signInWithGoogle() {
+    const t = translations[currentLang];
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider)
+      .then((result) => checkAndSaveUser(result.user))
+      .then(() => showToast(t.successGoogle))
+      .catch((error) => {
+        if (error.code === 'auth/popup-blocked') showToast(t.errorPopup);
+        else showToast('❌ ' + error.message);
+      });
+  }
+  
+  function signInWithFacebook() {
+    const t = translations[currentLang];
+    const provider = new firebase.auth.FacebookAuthProvider();
+    provider.addScope('email');
+    auth.signInWithPopup(provider)
+      .then((result) => checkAndSaveUser(result.user))
+      .then(() => showToast(t.successFacebook))
+      .catch((error) => {
+        if (error.code === 'auth/popup-blocked') showToast(t.errorPopup);
+        else if (error.code === 'auth/account-exists-with-different-credential') 
+          showToast(t.errorAccountExists);
+        else showToast('❌ ' + error.message);
+      });
+  }
+  
+  function checkAndSaveUser(user) {
+    return database.ref('users/' + user.uid).once('value').then((snapshot) => {
+      if (!snapshot.exists()) {
+        const t = translations[currentLang];
+        let phone = prompt('📱 ' + (currentLang === 'ar' ? 'أدخل رقم تليفونك:' : 'Enter your phone number:'));
+        while (!phone || phone.trim() === '') {
+          phone = prompt('📱 ' + (currentLang === 'ar' ? 'رقم التليفون مطلوب:' : 'Phone number required:'));
+        }
+        return database.ref('users/' + user.uid).set({
+          name: user.displayName || 'مستخدم',
+          email: user.email,
+          phone: phone.trim(),
+          createdAt: Date.now()
+        });
+      }
+    });
+  }
+  
+  function updateProfile() {
+    if (!currentUser) { showToast('⚠️ لم يتم تسجيل الدخول'); return; }
+    
+    const newName = document.getElementById('profileNameField').value.trim();
+    const oldPass = document.getElementById('profileOldPassword').value.trim();
+    const newPass = document.getElementById('profileNewPassword').value.trim();
+    const t = translations[currentLang];
+    
+    if (!newName) { showToast('⚠️ ' + (currentLang === 'ar' ? 'أدخل الاسم' : 'Enter your name')); return; }
+    
+    currentUser.updateProfile({ displayName: newName })
+      .then(() => database.ref('users/' + currentUser.uid).update({ name: newName }))
+      .then(() => {
+        document.getElementById('profileName').textContent = newName.split(' ')[0];
+        document.getElementById('userGreeting').textContent = newName.split(' ')[0];
+        
+        if (newPass) {
+          if (!oldPass) { 
+            showToast('⚠️ ' + (currentLang === 'ar' ? 'أدخل كلمة المرور الحالية' : 'Enter current password')); 
+            return Promise.reject(); 
+          }
+          if (newPass.length < 6) { 
+            showToast('⚠️ ' + (currentLang === 'ar' ? '6 أحرف على الأقل' : 'At least 6 characters')); 
+            return Promise.reject(); 
+          }
+          const credential = firebase.auth.EmailAuthProvider.credential(currentUser.email, oldPass);
+          return currentUser.reauthenticateWithCredential(credential)
+            .then(() => currentUser.updatePassword(newPass));
+        }
+      })
+      .then(() => {
+        showToast(t.successUpdate);
+        document.getElementById('profileOldPassword').value = '';
+        document.getElementById('profileNewPassword').value = '';
+        setTimeout(() => showScreen('homeScreen'), 1200);
+      })
+      .catch((error) => {
+        if (error === undefined) return;
+        if (error.code === 'auth/wrong-password') 
+          showToast('❌ ' + (currentLang === 'ar' ? 'كلمة المرور الحالية غير صحيحة' : 'Current password is incorrect'));
+        else if (error.code === 'auth/requires-recent-login') 
+          showToast('⚠️ ' + (currentLang === 'ar' ? 'سجل دخول مرة أخرى' : 'Please login again'));
+        else if (error) showToast('❌ ' + (error.message || 'حدث خطأ'));
+      });
+  }
+  
+  function logoutUser() {
+    const t = translations[currentLang];
+    if (!confirm(currentLang === 'ar' ? 'هل أنت متأكد من تسجيل الخروج؟' : 'Are you sure you want to logout?')) return;
+    auth.signOut().then(() => {
+      currentUser = null;
+      document.getElementById('profileBtn').style.display = 'none';
+      document.getElementById('userGreeting').textContent = 'مسلم';
+      showScreen('authScreen');
+      showToast(t.successLogout);
+    });
+  }
+  
+  function sendWhatsApp(problem) {
+    const number = '201153297929';
+    const name = currentUser ? (currentUser.displayName || 'مستخدم') : 'زائر';
+    const date = new Date().toLocaleString(currentLang === 'ar' ? 'ar-EG' : 'en-US');
+    const msg = 
+`السلام عليكم\nمركز الدعم - تطبيق مسلم\n-------------------------\nالاسم: ${name}\nالتاريخ: ${date}\nالمشكلة: ${problem}\n-------------------------`;
+    closePopup('requestsPopup');
+    window.open('https://wa.me/' + number + '?text=' + encodeURIComponent(msg), '_blank');
+    showToast(translations[currentLang].successWhatsApp);
+  }
+  
+  function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.style.display = 'block';
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => { toast.style.display = 'none'; }, 3000);
+  }
+  
+  function showWelcome() {
+    const last = localStorage.getItem('welcomeLast');
+    const now = Date.now();
+    if (!last || (now - parseInt(last)) > 86400000) {
+      setTimeout(() => { 
+        showPopup('welcomePopup'); 
+        localStorage.setItem('welcomeLast', now.toString()); 
+      }, 500);
+    }
+  }
+  
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      currentUser = user;
+      const avatarIcon = document.getElementById('defaultAvatarIcon');
+      const profileImg = document.getElementById('realProfileImage');
+      
+      if (user.photoURL) {
+        profileImg.src = user.photoURL;
+        profileImg.style.display = 'inline-block';
+        avatarIcon.style.display = 'none';
+      } else {
+        profileImg.style.display = 'none';
+        avatarIcon.style.display = 'inline-block';
+      }
+      
+      const t = translations[currentLang];
+      document.getElementById('profileName').textContent = user.displayName ? user.displayName.split(' ')[0] : t.profile;
+      document.getElementById('profileBtn').style.display = 'flex';
+      document.getElementById('userGreeting').textContent = user.displayName ? user.displayName.split(' ')[0] : 'مسلم';
+      document.getElementById('profileNameField').value = user.displayName || '';
+      database.ref('users/' + user.uid + '/phone').once('value').then((snapshot) => {
+        document.getElementById('profilePhoneField').value = snapshot.val() || 'غير مسجل';
+      });
+      if (document.getElementById('authScreen').classList.contains('active')) {
+        showScreen('homeScreen');
+        updateUI();
+      }
+    } else {
+      currentUser = null;
+      document.getElementById('profileBtn').style.display = 'none';
+      document.getElementById('userGreeting').textContent = 'مسلم';
+      if (!document.getElementById('authScreen').classList.contains('active')) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('authScreen').classList.add('active');
+      }
+    }
+  });
+  
+  document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('popup-overlay')) e.target.classList.remove('show');
+  });
+  
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') document.querySelectorAll('.popup-overlay.show').forEach(p => p.classList.remove('show'));
+  });
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    updateUI();
+    showWelcome();
+    console.log('🌙 موقع عبد الرحمن للخدمات الإسلامية');
+    console.log('🎨 تم التطوير بواسطة عبد الرحمن روبي');
+  });
+</script>
+
+</body>
+</html>

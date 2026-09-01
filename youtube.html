@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0a0f1a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>مسلم تيوب | MuslimTube</title>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  
+  <style>
+    /* ==================== CSS المتقدم ==================== */
+    :root {
+      --primary: #d4af37;
+      --primary-dark: #b8960f;
+      --primary-light: #f0d060;
+      --dark: #0a0f1a;
+      --dark-card: rgba(255,255,255,0.03);
+      --glass: rgba(255,255,255,0.05);
+      --shadow: 0 8px 32px rgba(0,0,0,0.6);
+      --radius: 20px;
+      --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'El Messiri', sans-serif;
+      background: var(--dark);
+      color: #e0e0e0;
+      min-height: 100vh;
+      padding: 15px;
+      padding-bottom: 140px;
+      background-image: 
+        radial-gradient(circle at 20% 20%, rgba(212,175,55,0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(212,175,55,0.03) 0%, transparent 50%);
+    }
+
+    /* ===== سكرول بار مخصص ===== */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--dark); }
+    ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
+    /* ===== الحاوية الرئيسية ===== */
+    .app-container {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* ===== الهيدر المتقدم ===== */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      margin-bottom: 20px;
+      border-bottom: 2px solid rgba(212,175,55,0.15);
+      position: sticky;
+      top: 0;
+      background: rgba(10,15,26,0.92);
+      backdrop-filter: blur(20px);
+      z-index: 100;
+      border-radius: 0 0 20px 20px;
+      padding: 15px 20px;
+    }
+
+    .header h1 {
+      color: var(--primary);
+      font-size: 26px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 40px rgba(212,175,55,0.2);
+    }
+
+    .header h1 i {
+      -webkit-text-fill-color: initial;
+      color: #ff0000;
+      text-shadow: 0 0 20px rgba(255,0,0,0.3);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .back-btn {
+      background: var(--glass);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #e0e0e0;
+      padding: 8px 18px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-size: 14px;
+      transition: var(--transition);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .back-btn:hover {
+      background: rgba(212,175,55,0.2);
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateX(-5px);
+    }
+
+    /* ===== شريط البحث المتطور ===== */
+    .search-section {
+      margin-bottom: 25px;
+      background: var(--glass);
+      border-radius: var(--radius);
+      padding: 20px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .search-box {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      position: relative;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 14px 20px;
+      border-radius: 30px;
+      border: 2px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.5);
+      color: white;
+      font-family: 'El Messiri', sans-serif;
+      font-size: 16px;
+      outline: none;
+      transition: var(--transition);
+      backdrop-filter: blur(10px);
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 30px rgba(212,175,55,0.1);
+      background: rgba(0,0,0,0.7);
+    }
+
+    .search-input::placeholder {
+      color: rgba(255,255,255,0.4);
+    }
+
+    .icon-btn {
+      background: linear-gradient(135deg, #ff0000, #cc0000);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 15px rgba(255,0,0,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .icon-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .icon-btn:hover::after {
+      opacity: 1;
+    }
+
+    .icon-btn:hover {
+      transform: scale(1.08) rotate(5deg);
+      box-shadow: 0 6px 25px rgba(255,0,0,0.4);
+    }
+
+    .icon-btn:active {
+      transform: scale(0.95);
+    }
+
+    .mic-btn.listening {
+      background: linear-gradient(135deg, #00c853, #00e676) !important;
+      animation: pulse 1.2s infinite;
+      box-shadow: 0 0 40px rgba(0,200,83,0.4);
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,200,83,0.6); }
+      70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(0,200,83,0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,200,83,0); }
+    }
+
+    /* ===== التصنيفات السريعة ===== */
+    .quick-categories {
+      display: flex;
+      gap: 8px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .cat-btn {
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(212,175,55,0.2);
+      background: var(--glass);
+      color: #aaa;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: 'El Messiri', sans-serif;
+      font-size: 13px;
+      backdrop-filter: blur(5px);
+    }
+
+    .cat-btn:hover {
+      background: rgba(212,175,55,0.15);
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .cat-btn.active {
+      background: var(--primary);
+      color: var(--dark);
+      border-color: var(--primary);
+    }
+
+    /* ===== مشغل الفيديو المحسن ===== */
+    .player-container {
+      display: none;
+      margin-bottom: 25px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #000;
+      border: 1px solid rgba(212,175,55,0.2);
+      box-shadow: var(--shadow);
+      animation: slideDown 0.5s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .player-container iframe {
+      width: 100%;
+      height: 400px;
+      border: none;
+    }
+
+    .player-info {
+      padding: 15px 20px;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .player-title {
+      color: var(--primary);
+      font-weight: bold;
+      font-size: 16px;
+      flex: 1;
+    }
+
+    .player-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .player-actions button {
+      background: var(--glass);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: white;
+      padding: 6px 14px;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 12px;
+    }
+
+    .player-actions button:hover {
+      background: var(--primary);
+      color: var(--dark);
+    }
+
+    /* ===== شبكة الفيديوهات ===== */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 18px;
+      animation: fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .video-card {
+      background: var(--glass);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius);
+      padding: 12px;
+      cursor: pointer;
+      transition: var(--transition);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .video-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(212,175,55,0.1), transparent);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .video-card:hover::before {
+      opacity: 1;
+    }
+
+    .video-card:hover {
+      transform: translateY(-6px) scale(1.01);
+      border-color: rgba(212,175,55,0.3);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    }
+
+    .video-card:active {
+      transform: scale(0.97);
+    }
+
+    .video-card img {
+      width: 100%;
+      border-radius: 12px;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      position: relative;
+      z-index: 1;
+    }
+
+    .video-card .v-title {
+      font-size: 14px;
+      font-weight: bold;
+      color: #f0f0f0;
+      line-height: 1.4;
+      margin-top: 10px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      position: relative;
+      z-index: 1;
+    }
+
+    .video-card .v-channel {
+      font-size: 12px;
+      color: var(--primary);
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .video-card .v-channel i {
+      font-size: 14px;
+      opacity: 0.6;
+    }
+
+    .video-card .video-duration {
+      position: absolute;
+      bottom: 70px;
+      right: 18px;
+      background: rgba(0,0,0,0.8);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      z-index: 2;
+      backdrop-filter: blur(5px);
+    }
+
+    /* ===== مشغل الصوت الخلفي المحسن ===== */
+    .bg-audio-bar {
+      position: fixed;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 92%;
+      max-width: 750px;
+      background: rgba(10, 15, 26, 0.95);
+      backdrop-filter: blur(25px);
+      border: 1px solid rgba(212,175,55,0.3);
+      border-radius: 30px;
+      padding: 12px 18px;
+      display: none;
+      align-items: center;
+      gap: 15px;
+      box-shadow: 0 10px 50px rgba(0,0,0,0.8);
+      z-index: 9999;
+      animation: slideUp 0.4s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(100px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+
+    .bg-audio-bar img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--primary);
+      box-shadow: 0 0 20px rgba(212,175,55,0.2);
+    }
+
+    .bg-audio-info {
+      flex: 1;
+      overflow: hidden;
+      min-width: 0;
+    }
+
+    .bg-audio-title {
+      font-size: 14px;
+      font-weight: bold;
+      color: #f0f0f0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .bg-audio-channel {
+      font-size: 12px;
+      color: var(--primary);
+    }
+
+    .bg-audio-progress {
+      width: 100%;
+      height: 3px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      margin-top: 4px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .bg-audio-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    .bg-audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .bg-play-btn {
+      background: var(--primary);
+      color: var(--dark);
+      border: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      box-shadow: 0 4px 15px rgba(212,175,55,0.3);
+    }
+
+    .bg-play-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 25px rgba(212,175,55,0.4);
+    }
+
+    .bg-play-btn:active {
+      transform: scale(0.95);
+    }
+
+    .bg-close-btn {
+      background: rgba(255,255,255,0.05);
+      border: none;
+      color: #888;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 14px;
+    }
+
+    .bg-close-btn:hover {
+      background: rgba(255,0,0,0.2);
+      color: #ff4444;
+    }
+
+    /* ===== شاشة التحميل ===== */
+    .loading-spinner {
+      text-align: center;
+      padding: 40px;
+      grid-column: 1/-1;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(212,175,55,0.1);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ===== رسائل الخطأ ===== */
+    .error-message {
+      background: rgba(255,0,0,0.1);
+      border: 1px solid rgba(255,0,0,0.2);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      color: #ff6b6b;
+      grid-column: 1/-1;
+    }
+
+    .empty-message {
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 60px 20px;
+      grid-column: 1/-1;
+    }
+
+    .empty-message i {
+      font-size: 60px;
+      color: rgba(212,175,55,0.2);
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    /* ===== توست إشعارات ===== */
+    .toast {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      background: rgba(10,15,26,0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--primary);
+      border-radius: 15px;
+      padding: 15px 25px;
+      color: white;
+      z-index: 10000;
+      animation: slideInRight 0.4s ease;
+      display: none;
+      box-shadow: var(--shadow);
+      max-width: 350px;
+    }
+
+    @keyframes slideInRight {
+      from { transform: translateX(100px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* ===== وضع ليلي تلقائي ===== */
+    .dark-mode {
+      --dark: #0a0f1a;
+    }
+
+    /* ===== استجابة للشاشات الصغيرة ===== */
+    @media (max-width: 600px) {
+      .header h1 { font-size: 20px; }
+      .header { padding: 12px 15px; }
+      .search-box { flex-wrap: wrap; }
+      .search-input { font-size: 14px; padding: 12px 16px; }
+      .icon-btn { width: 44px; height: 44px; font-size: 16px; }
+      .video-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+      .player-container iframe { height: 250px; }
+      .bg-audio-bar { padding: 10px 14px; gap: 10px; }
+      .bg-audio-title { font-size: 12px; }
+      .bg-play-btn { width: 38px; height: 38px; font-size: 15px; }
+      .bg-audio-bar img { width: 40px; height: 40px; }
+      .back-btn { font-size: 12px; padding: 6px 14px; }
+      .cat-btn { font-size: 11px; padding: 6px 12px; }
+      .toast { right: 10px; left: 10px; max-width: none; }
+    }
+
+    @media (max-width: 400px) {
+      .video-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .video-card { padding: 8px; }
+      .video-card .v-title { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== توست الإشعارات ===== -->
+<div class="toast" id="toast"></div>
+
+<!-- ===== التطبيق الرئيسي ===== -->
+<div class="app-container">
+
+  <!-- ===== الهيدر ===== -->
+  <header class="header">
+    <h1>
+      <i class="fab fa-youtube"></i>
+      مسلم تيوب
+    </h1>
+    <div class="header-actions">
+      <button onclick="toggleTheme()" class="back-btn" style="border-radius:50%; width:40px; padding:0; justify-content:center;">
+        <i class="fas fa-moon"></i>
+      </button>
+      <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-right"></i>
+        الرئيسية
+      </a>
+    </div>
+  </header>
+
+  <!-- ===== البحث ===== -->
+  <section class="search-section">
+    <div class="search-box">
+      <input 
+        type="text" 
+        id="searchInput" 
+        class="search-input" 
+        placeholder="🔍 ابحث عن فيديو... أو اضغط المايك"
+        onkeypress="if(event.key==='Enter') searchVideos()"
+        autofocus
+      >
+      
+      <button class="icon-btn mic-btn" id="micBtn" onclick="startVoiceSearch()" title="البحث الصوتي">
+        <i class="fas fa-microphone"></i>
+      </button>
+
+      <button class="icon-btn" onclick="searchVideos()" title="بحث">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+
+    <!-- التصنيفات السريعة -->
+    <div class="quick-categories">
+      <button class="cat-btn active" onclick="quickSearch('قصص إسلامية', this)">📖 قصص إسلامية</button>
+      <button class="cat-btn" onclick="quickSearch('قرآن كريم', this)">🕌 قرآن كريم</button>
+      <button class="cat-btn" onclick="quickSearch('محاضرات دينية', this)">🎙️ محاضرات</button>
+      <button class="cat-btn" onclick="quickSearch('أناشيد إسلامية', this)">🎵 أناشيد</button>
+      <button class="cat-btn" onclick="quickSearch('دروس فقه', this)">📚 دروس فقه</button>
+    </div>
+  </section>
+
+  <!-- ===== مشغل الفيديو ===== -->
+  <div class="player-container" id="playerContainer" data-aos="fade-up">
+    <iframe id="videoPlayer" allowfullscreen allow="autoplay"></iframe>
+    <div class="player-info">
+      <div class="player-title" id="playingTitle">🎬 جاري التشغيل...</div>
+      <div class="player-actions">
+        <button onclick="copyVideoLink()"><i class="fas fa-link"></i> نسخ</button>
+        <button onclick="shareVideo()"><i class="fas fa-share-alt"></i> مشاركة</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== شبكة النتائج ===== -->
+  <div class="video-grid" id="resultsGrid">
+    <div class="empty-message">
+      <i class="fas fa-video"></i>
+      <p>🔍 اكتب بحثك أو اختر تصنيفاً لعرض الفيديوهات</p>
+      <p style="font-size:13px; margin-top:8px; color:rgba(255,255,255,0.2);">مدعوم من YouTube API</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== مشغل الصوت الخلفي ===== -->
+<div class="bg-audio-bar" id="bgAudioBar">
+  <img id="bgThumb" src="" alt="الغلاف">
+  <div class="bg-audio-info">
+    <div class="bg-audio-title" id="bgTitle">🎵 جاري التشغيل...</div>
+    <div class="bg-audio-channel" id="bgChannel">القناة</div>
+    <div class="bg-audio-progress" onclick="seekAudio(event)">
+      <div class="bg-audio-progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+  <div class="bg-audio-controls">
+    <button class="bg-play-btn" id="bgPlayBtn" onclick="toggleAudio()">
+      <i class="fas fa-pause"></i>
+    </button>
+    <button class="bg-close-btn" onclick="closeAudioPlayer()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <audio id="globalAudioPlayer" style="display:none;"></audio>
+</div>
+
+<!-- ===== المكتبات الخارجية ===== -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<!-- ===== Firebase ===== -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
+<script>
+  // =============================================================
+  // ===== تهيئة Firebase والتحقق من تسجيل الدخول =====
+  // =============================================================
+  const firebaseConfig = {
+    apiKey: "AIzaSyC9uyTILCMVlCeNNuVJvDjrQJ25bP3IHKA",
+    authDomain: "muslim-30567.firebaseapp.com",
+    projectId: "muslim-30567",
+    appId: "1:477829492310:web:aa139ac9360fd9232a15f7"
+  };
+  
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  
+  // إخفاء محتوى الصفحة مؤقتاً لحد ما نتأكد إنه مسجل دخول
+  document.body.style.display = 'none';
+  
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      // المستخدم مسجل دخول -> اظهر الصفحة
+      document.body.style.display = 'block';
+    } else {
+      // المستخدم مش مسجل دخول -> رجعه لصفحة التسجيل
+      window.location.replace('index.html'); 
+    }
+  });
+
+  // ====================================================================
+  // ===================== جافا سكريبت المتقدمة =========================
+  // ====================================================================
+
+  // ===== التهيئة =====
+  AOS.init({
+    duration: 600,
+    once: true,
+    easing: 'ease-out-cubic'
+  });
+
+  // ===== المتغيرات العامة =====
+  const API_KEY = "AIzaSyCFr4UG-nQcipyCnkOVzHiuchVTE93E5As";
+  const globalAudio = document.getElementById('globalAudioPlayer');
+  let currentVideoId = null;
+  let currentVideoData = null;
+  let isDarkTheme = true;
+
+  // ===== دالة البحث الرئيسية =====
+  async function searchVideos(query = null) {
+    const searchInput = document.getElementById('searchInput');
+    const searchTerm = query || searchInput.value.trim() || 'قصص إسلامية';
+    
+    if (!query) searchInput.value = searchTerm;
+    
+    const grid = document.getElementById('resultsGrid');
+    grid.innerHTML = `
+      <div class="loading-spinner">
+        <div class="spinner"></div>
+        <p style="margin-top:15px; color:rgba(255,255,255,0.4);">جاري البحث عن فيديوهات...</p>
+      </div>
+    `;
+
+    try {
+      const res = await fetch(
+        `https://www.googleapis.com/youtube/v3/search?` +
+        `part=snippet&maxResults=15&q=${encodeURIComponent(searchTerm)}&type=video&key=${API_KEY}`
+      );
+      
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      
+      const data = await res.json();
+
+      if (!data.items || data.items.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-message">
+            <i class="fas fa-search"></i>
+            <p>😅 لم نجد نتائج لـ "${searchTerm}"</p>
+            <p style="font-size:13px; color:rgba(255,255,255,0.2);">جرب كلمات بحث مختلفة</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = '';
+      
+      data.items.forEach((item, index) => {
+        const videoId = item.id.videoId;
+        const title = item.snippet.title;
+        const thumb = item.snippet.thumbnails.medium.url;
+        const channel = item.snippet.channelTitle;
+        const description = item.snippet.description;
+
+        const card = document.createElement('div');
+        card.className = 'video-card';
+        card.setAttribute('data-aos', 'fade-up');
+        card.setAttribute('data-aos-delay', (index * 50).toString());
+        card.onclick = () => playVideo(videoId, title, thumb, channel, description);
+        
+        card.innerHTML = `
+          <img src="${thumb}" alt="${title}" loading="lazy">
+          <div class="video-duration">${getRandomDuration()}</div>
+          <div class="v-title">${title}</div>
+          <div class="v-channel">
+            <i class="fas fa-user-circle"></i>
+            ${channel}
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      showToast(`✅ تم العثور على ${data.items.length} فيديو`);
+
+    } catch (err) {
+      grid.innerHTML = `
+        <div class="error-message">
+          <i class="fas fa-exclamation-triangle" style="font-size:30px; display:block; margin-bottom:10px;"></i>
+          <p>⚠️ حدث خطأ: ${err.message}</p>
+          <p style="font-size:13px; color:rgba(255,255,255,0.3); margin-top:8px;">
+            تأكد من اتصالك بالإنترنت ومفتاح API
+          </p>
+        </div>
+      `;
+      console.error('خطأ البحث:', err);
+    }
+  }
+
+  // ===== تشغيل الفيديو =====
+  function playVideo(id, title, thumb, channel, description = '') {
+    currentVideoId = id;
+    currentVideoData = { id, title, thumb, channel, description };
+
+    // تشغيل فيديو
+    const container = document.getElementById('playerContainer');
+    const player = document.getElementById('videoPlayer');
+    const titleEl = document.getElementById('playingTitle');
+
+    player.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
+    titleEl.textContent = `🎬 ${title}`;
+    container.style.display = 'block';
+    container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    // تشغيل الصوت في الخلفية
+    startBackgroundAudio(id, title, thumb, channel);
+
+    // حفظ في السجل
+    saveToHistory({ id, title, thumb, channel });
+
+    showToast(`🎵 جاري تشغيل: ${title.substring(0, 40)}...`);
+  }
+
+  // ===== تشغيل الصوت في الخلفية =====
+  function startBackgroundAudio(id, title, thumb, channel) {
+    const audioUrl = `https://pipe.projectsegfau.lt/latest_version?id=${id}&itag=140`;
+    
+    globalAudio.src = audioUrl;
+    globalAudio.play().catch(() => {
+      // محاولة بديلة إذا فشل التشغيل التلقائي
+      setTimeout(() => globalAudio.play().catch(() => {}), 1000);
+    });
+
+    // تحديث واجهة المشغل
+    const bar = document.getElementById('bgAudioBar');
+    document.getElementById('bgTitle').textContent = title;
+    document.getElementById('bgChannel').textContent = channel;
+    document.getElementById('bgThumb').src = thumb;
+    document.getElementById('bgPlayBtn').innerHTML = '<i class="fas fa-pause"></i>';
+    bar.style.display = 'flex';
+
+    // تحديث Media Session API
+    updateMediaSession(title, channel, thumb);
+
+    // إضافة مستمع لتحديث شريط التقدم
+    globalAudio.addEventListener('timeupdate', updateProgress);
+    globalAudio.addEventListener('ended', () => {
+      document.getElementById('bgPlayBtn').innerHTML = '<i class="fas fa-play"></i>';
+    });
+  }
+
+  // ===== تحديث شريط التقدم =====
+  function updateProgress() {
+    const progress = (globalAudio.currentTime / globalAudio.duration) * 100;
+    document.getElementById('progressFill').style.width = `${progress || 0}%`;
+  }
+
+  // ===== التحكم في التقدم =====
+  function seekAudio(event) {
+    const bar = event.currentTarget;
+    const rect = bar.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width;
+    if (globalAudio.duration) {
+      globalAudio.currentTime = x * globalAudio.duration;
+    }
+  }
+
+  // ===== تبديل التشغيل/الإيقاف =====
+  function toggleAudio() {
+    const btn = document.getElementById('bgPlayBtn');
+    if (globalAudio.paused) {
+      globalAudio.play();
+      btn.innerHTML = '<i class="fas fa-pause"></i>';
+    } else {
+      globalAudio.pause();
+      btn.innerHTML = '<i class="fas fa-play"></i>';
+    }
+  }
+
+  // ===== إغلاق مشغل الصوت =====
+  function closeAudioPlayer() {
+    globalAudio.pause();
+    globalAudio.src = '';
+    document.getElementById('bgAudioBar').style.display = 'none';
+    document.getElementById('bgPlayBtn').innerHTML = '<i class="fas fa-play"></i>';
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.metadata = null;
+    }
+  }
+
+  // ===== Media Session API (دعم الإشعارات) =====
+  function updateMediaSession(title, artist, artwork) {
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: title,
+        artist: artist,
+        album: "مسلم تيوب",
+        artwork: [
+          { src: artwork, sizes: '512x512', type: 'image/jpeg' }
+        ]
+      });
+
+      navigator.mediaSession.setActionHandler('play', () => {
+        globalAudio.play();
+        document.getElementById('bgPlayBtn').innerHTML = '<i class="fas fa-pause"></i>';
+      });
+      
+      navigator.mediaSession.setActionHandler('pause', () => {
+        globalAudio.pause();
+        document.getElementById('bgPlayBtn').innerHTML = '<i class="fas fa-play"></i>';
+      });
+      
+      navigator.mediaSession.setActionHandler('stop', closeAudioPlayer);
+      navigator.mediaSession.setActionHandler('seekto', (details) => {
+        if (details.fastSeek && globalAudio.duration) {
+          globalAudio.currentTime = details.seekTime;
+        }
+      });
+    }
+  }
+
+  // ===== البحث الصوتي المتقدم =====
+  function startVoiceSearch() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      showToast('⚠️ متصفحك لا يدعم البحث الصوتي. استخدم كروم.');
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'ar-SA';
+    recognition.interimResults = true;
+    recognition.maxAlternatives = 3;
+
+    const micBtn = document.getElementById('micBtn');
+    const searchInput = document.getElementById('searchInput');
+
+    recognition.onstart = () => {
+      micBtn.classList.add('listening');
+      searchInput.placeholder = "🎤 استمع... تحدث الآن";
+      searchInput.value = '';
+      showToast('🎤 جاري الاستماع... تحدث بوضوح');
+    };
+
+    recognition.onresult = (event) => {
+      let finalTranscript = '';
+      let interimTranscript = '';
+
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const transcript = event.results[i][0].transcript;
+        if (event.results[i].isFinal) {
+          finalTranscript += transcript;
+        } else {
+          interimTranscript += transcript;
+        }
+      }
+
+      searchInput.value = finalTranscript || interimTranscript;
+      
+      if (finalTranscript) {
+        showToast(`✅ تم التعرف: "${finalTranscript}"`);
+        searchVideos(finalTranscript);
+      }
+    };
+
+    recognition.onerror = (event) => {
+      showToast(`❌ خطأ: ${event.error}`);
+      console.error('خطأ في التعرف الصوتي:', event);
+    };
+
+    recognition.onend = () => {
+      micBtn.classList.remove('listening');
+      searchInput.placeholder = "🔍 ابحث عن فيديو... أو اضغط المايك";
+      
+      if (!searchInput.value.trim()) {
+        searchInput.value = 'قصص إسلامية';
+        searchVideos();
+      }
+    };
+
+    recognition.start();
+  }
+
+  // ===== البحث السريع بالتصنيفات =====
+  function quickSearch(query, btn) {
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    
+    document.getElementById('searchInput').value = query;
+    searchVideos(query);
+    showToast(`📂 بحث: ${query}`);
+  }
+
+  // ===== نسخ رابط الفيديو =====
+  function copyVideoLink() {
+    if (!currentVideoId) {
+      showToast('⚠️ لا يوجد فيديو مشغل');
+      return;
+    }
+    const url = `https://youtu.be/${currentVideoId}`;
+    navigator.clipboard.writeText(url).then(() => {
+      showToast('✅ تم نسخ الرابط');
+    }).catch(() => {
+      // طريقة بديلة للنسخ
+      const textarea = document.createElement('textarea');
+      textarea.value = url;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      showToast('✅ تم نسخ الرابط');
+    });
+  }
+
+  // ===== مشاركة الفيديو =====
+  function shareVideo() {
+    if (!currentVideoId) {
+      showToast('⚠️ لا يوجد فيديو للمشاركة');
+      return;
+    }
+    const url = `https://youtu.be/${currentVideoId}`;
+    if (navigator.share) {
+      navigator.share({
+        title: currentVideoData?.title || 'فيديو من مسلم تيوب',
+        text: '🎬 شاهد هذا الفيديو على مسلم تيوب',
+        url: url
+      }).catch(() => {});
+    } else {
+      copyVideoLink();
+      showToast('📋 تم نسخ الرابط للمشاركة');
+    }
+  }
+
+  // ===== حفظ سجل المشاهدة =====
+  function saveToHistory(video) {
+    let history = JSON.parse(localStorage.getItem('muslimTubeHistory') || '[]');
+    history = history.filter(item => item.id !== video.id);
+    history.unshift(video);
+    if (history.length > 20) history.pop();
+    localStorage.setItem('muslimTubeHistory', JSON.stringify(history));
+  }
+
+  // ===== تبديل الثيم =====
+  function toggleTheme() {
+    isDarkTheme = !isDarkTheme;
+    document.body.style.background = isDarkTheme ? '#0a0f1a' : '#f5f0e8';
+    document.body.style.color = isDarkTheme ? '#e0e0e0' : '#1a1a1a';
+    document.querySelector('.header').style.background = isDarkTheme 
+      ? 'rgba(10,15,26,0.92)' 
+      : 'rgba(245,240,232,0.95)';
+    document.querySelector('.search-section').style.background = isDarkTheme 
+      ? 'rgba(255,255,255,0.03)' 
+      : 'rgba(0,0,0,0.05)';
+    
+    showToast(isDarkTheme ? '🌙 الوضع الليلي' : '☀️ الوضع النهاري');
+  }
+
+  // ===== عرض توست إشعارات =====
+  function showToast(message, duration = 3000) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.style.display = 'block';
+    toast.style.opacity = '1';
+    
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => {
+      toast.style.opacity = '0';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 300);
+    }, duration);
+  }
+
+  // ===== وظائف مساعدة =====
+  function getRandomDuration() {
+    const mins = Math.floor(Math.random() * 15) + 1;
+    const secs = Math.floor(Math.random() * 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  }
+
+  // ===== تحميل الفيديوهات عند بدء التشغيل =====
+  window.onload = function() {
+    // تحميل التصنيف الافتراضي
+    document.querySelector('.cat-btn.active')?.click();
+    
+    // استعادة آخر فيديو تم تشغيله
+    const history = JSON.parse(localStorage.getItem('muslimTubeHistory') || '[]');
+    if (history.length > 0 && !document.getElementById('playerContainer').style.display === 'block') {
+      const last = history[0];
+      // عرض الفيديو الأخير بدون تشغيل تلقائي
+      const player = document.getElementById('videoPlayer');
+      player.src = `https://www.youtube.com/embed/${last.id}?rel=0&modestbranding=1`;
+      document.getElementById('playingTitle').textContent = `🔄 آخر مشاهدة: ${last.title}`;
+      document.getElementById('playerContainer').style.display = 'block';
+    }
+
+    // دعم مفاتيح الاختصار
+    document.addEventListener('keydown', (e) => {
+      // Ctrl + F للبحث
+      if (e.ctrlKey && e.key === 'f') {
+        e.preventDefault();
+        document.getElementById('searchInput').focus();
+      }
+      // مفتاح المسافة للتحكم بالصوت
+      if (e.target.tagName !== 'INPUT' && e.key === ' ') {
+        e.preventDefault();
+        if (document.getElementById('bgAudioBar').style.display === 'flex') {
+          toggleAudio();
+        }
+      }
+    });
+
+    console.log('🚀 مسلم تيوب جاهز للاستخدام');
+    console.log('📌 اختصارات: Ctrl+F للبحث | Space للتحكم بالصوت');
+  };
+
+  // ===== معالجة الأخطاء العالمية =====
+  window.addEventListener('error', (e) => {
+    console.error('خطأ عالمي:', e);
+    showToast('⚠️ حدث خطأ غير متوقع. تحقق من وحدة التحكم.');
+  });
+
+  // ===== دعم PWA =====
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  }
+
+  // ===== التحديث التلقائي للبحث =====
+  let searchTimeout;
+  document.getElementById('searchInput').addEventListener('input', (e) => {
+    clearTimeout(searchTimeout);
+    const value = e.target.value.trim();
+    if (value.length >= 3) {
+      searchTimeout = setTimeout(() => searchVideos(value), 600);
+    }
+  });
+
+  console.log('✨ تم التحميل بنجاح | مصمم بواسطة MuslimTube');
+</script>
+</body>
+</html>
