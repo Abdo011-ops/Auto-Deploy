@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نور القرآن</title>
-  <link rel="icon" href="Favicon.png" type="image/png">
+  <title>عبد الرحمن للخدمات الإسلامية</title>
+  <link rel="icon" href="favicon.png" type="image/png">
   
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -765,38 +765,69 @@
     document.getElementById('audioElement').playbackRate = parseFloat(speed);
   }
 
-  async function downloadCurrentSurah() {
+  // =============================================
+  // وظيفة التحميل بنظام النسبة المئوية
+  // =============================================
+  function downloadCurrentSurah() {
     const audio = document.getElementById('audioElement');
     if (!audio.src) return;
     
     const btn = document.getElementById('downloadBtn');
     const originalIcon = btn.innerHTML;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-    btn.disabled = true;
     
-    try {
-      const response = await fetch(audio.src, { mode: 'cors' });
-      if (!response.ok) throw new Error('فشل التحميل');
+    // تصغير الخط ليتناسب مع كتابة النسبة المئوية
+    btn.style.fontSize = '14px';
+    btn.style.fontWeight = 'bold';
+    btn.disabled = true;
+    btn.innerHTML = '0%';
+    
+    const surahName = document.getElementById('audioSurahName').textContent.trim();
+    const reciterName = document.getElementById('audioReciterName').textContent.trim();
+    const fileName = `${surahName} - ${reciterName}.mp3`;
+    
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', audio.src, true);
+    xhr.responseType = 'blob'; 
+    
+    xhr.onprogress = function(event) {
+      if (event.lengthComputable) {
+        const percentComplete = Math.round((event.loaded / event.total) * 100);
+        btn.innerHTML = percentComplete + '%';
+      } else {
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+      }
+    };
+    
+    xhr.onload = function() {
+      if (this.status === 200) {
+        const blob = this.response;
+        const blobUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
+      } else {
+        alert('تعذر تحميل الملف، حاول مرة أخرى');
+      }
       
-      const blob = await response.blob();
-      const blobUrl = URL.createObjectURL(blob);
-      
-      const surahName = document.getElementById('audioSurahName').textContent.trim();
-      const fileName = `${surahName} - ${currentReciter}.mp3`;
-      
-      const a = document.createElement('a');
-      a.href = blobUrl;
-      a.download = fileName;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
-    } catch (err) {
-      alert('تعذر تحميل الملف');
-    } finally {
+      // إرجاع الزر لشكله الأصلي
+      btn.style.fontSize = ''; // للعودة لخصائص الـ CSS الافتراضية
       btn.innerHTML = originalIcon;
       btn.disabled = false;
-    }
+    };
+    
+    xhr.onerror = function() {
+      alert('حدث خطأ في الاتصال بالسيرفر أثناء التحميل.');
+      btn.style.fontSize = '';
+      btn.innerHTML = originalIcon;
+      btn.disabled = false;
+    };
+    
+    xhr.send();
   }
   
   document.getElementById('audioElement').addEventListener('ended', function() {
