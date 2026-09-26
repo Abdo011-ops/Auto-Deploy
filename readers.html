@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>القراء - استماع القرآن</title>
+  <title>عبد الرحمن للخدمات الإسلامية</title>
+  <link rel="icon" href="Favicon.png" type="image/png">
+  
   <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   
@@ -84,11 +86,45 @@
     .reciter-title {
       text-align: center;
       padding: 15px;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       border-bottom: 1px solid rgba(212,175,55,0.1);
     }
     .reciter-title h2 { font-size: 26px; color: #d4af37; }
     
+    /* تصميم مربع البحث الجديد */
+    .search-container {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .search-container input {
+      width: 100%;
+      padding: 14px 45px 14px 20px; /* مسافة للأيقونة على اليمين */
+      border-radius: 30px;
+      border: 1px solid rgba(212,175,55,0.2);
+      background: rgba(255,255,255,0.03);
+      color: #e0e0e0;
+      font-family: 'El Messiri', sans-serif;
+      font-size: 15px;
+      outline: none;
+      transition: all 0.3s;
+    }
+    .search-container input:focus {
+      border-color: #d4af37;
+      background: rgba(212,175,55,0.05);
+      box-shadow: 0 0 10px rgba(212,175,55,0.1);
+    }
+    .search-container input::placeholder {
+      color: rgba(255,255,255,0.3);
+    }
+    .search-container .search-icon {
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #d4af37;
+      font-size: 16px;
+    }
+
     .surah-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -215,7 +251,7 @@
     .home-btn:hover { background: rgba(212,175,55,0.25); transform: scale(1.05); }
   </style>
 </head>
-<body style="display: none;"> <!-- إخفاء المحتوى مؤقتاً لحين التحقق -->
+<body style="display: none;">
 
 <div class="container">
   
@@ -239,6 +275,13 @@
     <div class="reciter-title">
       <h2 id="reciterTitle">اختر السورة</h2>
     </div>
+    
+    <!-- مربع البحث عن السور -->
+    <div class="search-container">
+      <i class="fas fa-search search-icon"></i>
+      <input type="text" id="surahSearch" placeholder="ابحث باسم السورة أو رقمها..." onkeyup="filterSurahs()">
+    </div>
+
     <div class="surah-grid" id="surahGrid">
       <div class="empty-msg">⏳ جاري التحميل...</div>
     </div>
@@ -254,7 +297,7 @@
       <div class="surah-name" id="audioSurahName">اختر سورة للاستماع</div>
       <div class="reciter-name" id="audioReciterName">القارئ</div>
       
-      <audio controls id="audioElement">
+      <audio controls id="audioElement" controlsList="nodownload noplaybackrate">
         <source src="" type="audio/mpeg">
         متصفحك لا يدعم الصوت
       </audio>
@@ -264,7 +307,11 @@
           <i class="fas fa-repeat"></i>
         </button>
         
-        <select id="speedSelect" onchange="changeSpeed()">
+        <button id="downloadBtn" onclick="downloadCurrentSurah()" title="تحميل السورة">
+          <i class="fas fa-download"></i>
+        </button>
+        
+        <select id="speedSelect" onchange="changeSpeed()" title="سرعة التشغيل">
           <option value="0.5">0.5x</option>
           <option value="0.75">0.75x</option>
           <option value="1.0" selected>1.0x</option>
@@ -299,17 +346,12 @@
   
   auth.onAuthStateChanged((user) => {
     if (user) {
-      // المستخدم مسجل دخول -> إظهار الصفحة
       document.body.style.display = 'block';
     } else {
-      // المستخدم غير مسجل دخول -> توجيه للصفحة الرئيسية
       window.location.replace('index.html'); 
     }
   });
 
-  // =============================================
-  // 1. قائمة الشيوخ
-  // =============================================
   const reciters = [
     { code: 'hussary', name: 'محمود الحصري' },
     { code: 'basit', name: 'عبد الباسط عبد الصمد' },
@@ -319,9 +361,6 @@
     { code: 'maher', name: 'ماهر المعيقلي' }
   ];
   
-  // =============================================
-  // 2. روابط القراء (شغالة 100%)
-  // =============================================
   const reciterUrls = {
     hussary: 'https://server13.mp3quran.net/hussary',
     basit: 'https://server7.mp3quran.net/basit',
@@ -331,17 +370,11 @@
     maher: 'https://server12.mp3quran.net/maher'
   };
   
-  // =============================================
-  // 3. متغيرات
-  // =============================================
   let quranData = [];
   let currentReciter = null;
   let currentReciterCode = null;
   let isLooping = false;
   
-  // =============================================
-  // 4. تحميل أسماء السور
-  // =============================================
   async function loadSurahs() {
     try {
       const res = await fetch('https://api.alquran.cloud/v1/surah');
@@ -352,9 +385,6 @@
     }
   }
   
-  // =============================================
-  // 5. عرض قائمة القراء
-  // =============================================
   function showReciters() {
     const grid = document.getElementById('recitersGrid');
     grid.innerHTML = reciters.map(r => `
@@ -365,9 +395,6 @@
     `).join('');
   }
   
-  // =============================================
-  // 6. اختيار قارئ
-  // =============================================
   function selectReciter(code, name) {
     currentReciter = name;
     currentReciterCode = code;
@@ -376,12 +403,12 @@
     document.getElementById('recitersScreen').classList.remove('active');
     document.getElementById('surahsScreen').classList.add('active');
     
+    // تفريغ مربع البحث عند اختيار قارئ جديد
+    document.getElementById('surahSearch').value = '';
+    
     showSurahs();
   }
   
-  // =============================================
-  // 7. عرض السور
-  // =============================================
   function showSurahs() {
     const grid = document.getElementById('surahGrid');
     grid.innerHTML = quranData.map(s => `
@@ -391,19 +418,33 @@
       </div>
     `).join('');
   }
+
+  // =============================================
+  // وظيفة البحث وفلترة السور
+  // =============================================
+  function filterSurahs() {
+    const searchTerm = document.getElementById('surahSearch').value.toLowerCase();
+    const cards = document.querySelectorAll('#surahGrid .surah-card');
+    
+    cards.forEach(card => {
+      const surahName = card.querySelector('.name').innerText.toLowerCase();
+      const surahNumber = card.querySelector('.number').innerText;
+      
+      if (surahName.includes(searchTerm) || surahNumber.includes(searchTerm)) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
   
-  // =============================================
-  // 8. تشغيل السورة
-  // =============================================
   function playSurah(number) {
-    // بناء الرابط: رقم السورة بثلاث خانات (001، 002، ...)
     const url = `${reciterUrls[currentReciterCode]}/${String(number).padStart(3, '0')}.mp3`;
     const surah = quranData.find(s => s.number === number);
     
     document.getElementById('audioSurahName').textContent = `سورة ${surah.name}`;
     document.getElementById('audioReciterName').textContent = `القارئ: ${currentReciter}`;
     
-    // إعادة ضبط التكرار والسرعة
     isLooping = false;
     document.getElementById('loopBtn').classList.remove('active');
     document.getElementById('loopBtn').innerHTML = '<i class="fas fa-repeat"></i>';
@@ -415,14 +456,10 @@
     audio.load();
     audio.play();
     
-    // الانتقال لشاشة المشغل
     document.getElementById('surahsScreen').classList.remove('active');
     document.getElementById('audioScreen').classList.add('active');
   }
   
-  // =============================================
-  // 9. التكرار
-  // =============================================
   function toggleLoop() {
     isLooping = !isLooping;
     const btn = document.getElementById('loopBtn');
@@ -435,17 +472,24 @@
     }
   }
   
-  // =============================================
-  // 10. تغيير السرعة
-  // =============================================
   function changeSpeed() {
     const speed = document.getElementById('speedSelect').value;
     document.getElementById('audioElement').playbackRate = parseFloat(speed);
   }
+
+  function downloadCurrentSurah() {
+    const audio = document.getElementById('audioElement');
+    if (!audio.src) return;
+    
+    const a = document.createElement('a');
+    a.href = audio.src;
+    a.target = '_blank';
+    a.download = 'Surah.mp3';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
   
-  // =============================================
-  // 11. عند انتهاء السورة (يعيدها لو التكرار شغال)
-  // =============================================
   document.getElementById('audioElement').addEventListener('ended', function() {
     if (isLooping) {
       this.currentTime = 0;
@@ -453,9 +497,6 @@
     }
   });
   
-  // =============================================
-  // 12. الرجوع للخلف
-  // =============================================
   function goBack() {
     document.getElementById('surahsScreen').classList.remove('active');
     document.getElementById('recitersScreen').classList.add('active');
@@ -466,9 +507,6 @@
     document.getElementById('surahsScreen').classList.add('active');
   }
   
-  // =============================================
-  // 13. تشغيل الموقع
-  // =============================================
   loadSurahs();
   setTimeout(showReciters, 300);
 </script>
