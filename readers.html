@@ -6,13 +6,13 @@
   <title>عبد الرحمن للخدمات الإسلامية</title>
   <link rel="icon" href="Favicon.png" type="image/png">
   
-  <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: 'El Messiri', sans-serif;
+      font-family: 'Cairo', sans-serif;
       background: #0a0f1a;
       color: #e0e0e0;
       min-height: 100vh;
@@ -73,7 +73,7 @@
       padding: 10px 20px;
       color: #e0e0e0;
       cursor: pointer;
-      font-family: 'El Messiri', sans-serif;
+      font-family: 'Cairo', sans-serif;
       font-size: 14px;
       margin-bottom: 15px;
       display: inline-flex;
@@ -89,40 +89,80 @@
       margin-bottom: 15px;
       border-bottom: 1px solid rgba(212,175,55,0.1);
     }
-    .reciter-title h2 { font-size: 26px; color: #d4af37; }
+    .reciter-title h2 { font-size: 26px; color: #d4af37; font-family: 'Cairo', sans-serif; }
     
-    /* تصميم مربع البحث */
+    /* ===== تصميم مربع البحث مع زر المايك ===== */
     .search-container {
       position: relative;
       margin-bottom: 20px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
     }
-    .search-container input {
+    .search-input-wrapper {
+      position: relative;
+      flex: 1;
+    }
+    .search-input-wrapper input {
       width: 100%;
       padding: 14px 45px 14px 20px;
       border-radius: 30px;
       border: 1px solid rgba(212,175,55,0.2);
       background: rgba(255,255,255,0.03);
       color: #e0e0e0;
-      font-family: 'El Messiri', sans-serif;
+      font-family: 'Cairo', sans-serif;
       font-size: 15px;
       outline: none;
       transition: all 0.3s;
     }
-    .search-container input:focus {
+    .search-input-wrapper input:focus {
       border-color: #d4af37;
       background: rgba(212,175,55,0.05);
       box-shadow: 0 0 10px rgba(212,175,55,0.1);
     }
-    .search-container input::placeholder {
+    .search-input-wrapper input::placeholder {
       color: rgba(255,255,255,0.3);
     }
-    .search-container .search-icon {
+    .search-input-wrapper .search-icon {
       position: absolute;
       right: 18px;
       top: 50%;
       transform: translateY(-50%);
       color: #d4af37;
       font-size: 16px;
+      pointer-events: none;
+    }
+    
+    /* زر المايك */
+    .mic-btn {
+      background: rgba(212,175,55,0.1);
+      border: 1px solid rgba(212,175,55,0.3);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      min-width: 50px;
+      color: #d4af37;
+      font-size: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mic-btn:hover {
+      background: rgba(212,175,55,0.2);
+      transform: scale(1.05);
+    }
+    .mic-btn.listening {
+      background: #e74c3c;
+      border-color: #e74c3c;
+      color: white;
+      animation: pulse 1.2s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+      70% { box-shadow: 0 0 0 15px rgba(231, 76, 60, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
     }
 
     .surah-grid {
@@ -155,7 +195,14 @@
       font-size: 12px;
       font-weight: 700;
     }
-    .surah-card .name { font-size: 15px; font-weight: 600; color: #f0f0f0; margin-top: 4px; }
+    .surah-card .name { 
+      font-family: 'Amiri', serif;
+      font-size: 18px; 
+      font-weight: 700; 
+      color: #f0f0f0; 
+      margin-top: 6px; 
+      line-height: 1.6;
+    }
     
     .audio-player {
       background: linear-gradient(145deg, rgba(20,28,43,0.9), rgba(10,15,26,0.95));
@@ -165,14 +212,16 @@
       text-align: center;
     }
     .audio-player .surah-name {
-      font-size: 24px;
+      font-family: 'Amiri', serif;
+      font-size: 28px;
       font-weight: 700;
       color: #d4af37;
+      line-height: 1.8;
     }
     .audio-player .reciter-name {
       font-size: 16px;
       color: #aaa;
-      margin-top: 5px;
+      margin-top: 8px;
     }
     .audio-player audio {
       width: 100%;
@@ -219,7 +268,7 @@
       border-radius: 30px;
       padding: 8px 15px;
       color: #d4af37;
-      font-family: 'El Messiri', sans-serif;
+      font-family: 'Cairo', sans-serif;
       font-size: 14px;
       outline: none;
       cursor: pointer;
@@ -280,10 +329,15 @@
       <h2 id="reciterTitle">اختر السورة</h2>
     </div>
     
-    <!-- مربع البحث عن السور -->
+    <!-- مربع البحث مع زر المايك -->
     <div class="search-container">
-      <i class="fas fa-search search-icon"></i>
-      <input type="text" id="surahSearch" placeholder="ابحث باسم السورة أو رقمها..." onkeyup="filterSurahs()">
+      <div class="search-input-wrapper">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" id="surahSearch" placeholder="ابحث باسم السورة أو رقمها..." onkeyup="filterSurahs()">
+      </div>
+      <button class="mic-btn" id="micBtn" onclick="startVoiceSearch()" title="البحث بالصوت">
+        <i class="fas fa-microphone" id="micIcon"></i>
+      </button>
     </div>
 
     <div class="surah-grid" id="surahGrid">
@@ -378,6 +432,8 @@
   let currentReciter = null;
   let currentReciterCode = null;
   let isLooping = false;
+  let recognition = null;
+  let isListening = false;
   
   async function loadSurahs() {
     try {
@@ -427,19 +483,98 @@
   // وظيفة البحث وفلترة السور
   // =============================================
   function filterSurahs() {
-    const searchTerm = document.getElementById('surahSearch').value.toLowerCase();
+    const searchTerm = document.getElementById('surahSearch').value.trim().toLowerCase();
     const cards = document.querySelectorAll('#surahGrid .surah-card');
     
     cards.forEach(card => {
       const surahName = card.querySelector('.name').innerText.toLowerCase();
       const surahNumber = card.querySelector('.number').innerText;
       
-      if (surahName.includes(searchTerm) || surahNumber.includes(searchTerm)) {
+      // إزالة التشكيل من اسم السورة للمقارنة
+      const cleanName = surahName.replace(/[\u064B-\u0652\u0670\u0640]/g, '');
+      const cleanSearch = searchTerm.replace(/[\u064B-\u0652\u0670\u0640]/g, '');
+      
+      if (cleanName.includes(cleanSearch) || surahNumber.includes(cleanSearch)) {
         card.style.display = 'block';
       } else {
         card.style.display = 'none';
       }
     });
+  }
+
+  // =============================================
+  // البحث الصوتي باستخدام Web Speech API
+  // =============================================
+  function startVoiceSearch() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    
+    if (!SpeechRecognition) {
+      alert('متصفحك لا يدعم البحث الصوتي. جرب Chrome أو Safari.');
+      return;
+    }
+    
+    const micBtn = document.getElementById('micBtn');
+    const micIcon = document.getElementById('micIcon');
+    
+    // لو بيسمع بالفعل، اقفل
+    if (isListening && recognition) {
+      recognition.stop();
+      return;
+    }
+    
+    recognition = new SpeechRecognition();
+    recognition.lang = 'ar-SA';
+    recognition.continuous = false;
+    recognition.interimResults = true;
+    recognition.maxAlternatives = 1;
+    
+    recognition.onstart = () => {
+      isListening = true;
+      micBtn.classList.add('listening');
+      micIcon.className = 'fas fa-stop';
+      document.getElementById('surahSearch').placeholder = '🎤 جاري الاستماع...';
+    };
+    
+    recognition.onresult = (event) => {
+      let transcript = '';
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        transcript += event.results[i][0].transcript;
+      }
+      
+      // نعرض النص المُلتقط في مربع البحث
+      const searchInput = document.getElementById('surahSearch');
+      searchInput.value = transcript;
+      
+      // لو النتيجة نهائية، نفلتر
+      if (event.results[event.results.length - 1].isFinal) {
+        filterSurahs();
+      }
+    };
+    
+    recognition.onerror = (event) => {
+      console.error('خطأ في التعرف على الصوت:', event.error);
+      if (event.error === 'not-allowed') {
+        alert('يجب السماح بالوصول للميكروفون');
+      } else if (event.error === 'no-speech') {
+        alert('لم يتم التقاط أي صوت، حاول مرة أخرى');
+      }
+    };
+    
+    recognition.onend = () => {
+      isListening = false;
+      micBtn.classList.remove('listening');
+      micIcon.className = 'fas fa-microphone';
+      document.getElementById('surahSearch').placeholder = 'ابحث باسم السورة أو رقمها...';
+      
+      // نفلتر النتيجة النهائية
+      filterSurahs();
+    };
+    
+    try {
+      recognition.start();
+    } catch (e) {
+      console.error(e);
+    }
   }
   
   function playSurah(number) {
@@ -483,7 +618,6 @@
 
   // =============================================
   // تحميل السورة باستخدام fetch + Blob
-  // يحل مشكلة 404 على ويندوز ومشكلة التشغيل على سفاري iPhone
   // =============================================
   async function downloadCurrentSurah() {
     const audio = document.getElementById('audioElement');
@@ -495,14 +629,12 @@
     btn.disabled = true;
     
     try {
-      // جلب الملف كـ Blob
       const response = await fetch(audio.src, { mode: 'cors' });
       if (!response.ok) throw new Error('فشل التحميل');
       
       const blob = await response.blob();
       const blobUrl = URL.createObjectURL(blob);
       
-      // استخراج اسم السورة والقارئ من العنوان المعروض
       const surahName = document.getElementById('audioSurahName').textContent
         .replace('سورة ', '').trim();
       const reciterName = currentReciter || 'قارئ';
@@ -515,7 +647,6 @@
       a.click();
       document.body.removeChild(a);
       
-      // تنظيف الرابط المؤقت بعد فترة
       setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
       
     } catch (err) {
