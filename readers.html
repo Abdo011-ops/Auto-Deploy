@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>عبد الرحمن للخدمات الإسلامية</title>
-  <link rel="icon" href="Favicon.png" type="image/png">
+  <link rel="icon" href="favicon.png" type="image/png">
   
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -13,7 +13,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Cairo', sans-serif;
-      background: #0a0f1a;
+      background: #080c14; /* لون خلفية أعمق وأكثر فخامة */
       color: #e0e0e0;
       min-height: 100vh;
       padding: 20px;
@@ -26,77 +26,98 @@
     .header {
       text-align: center;
       padding: 30px 20px;
-      border-radius: 30px;
-      margin-bottom: 25px;
-      background: linear-gradient(145deg, rgba(212,175,55,0.06), rgba(255,255,255,0.02));
-      border: 1px solid rgba(212,175,55,0.12);
+      border-radius: 25px;
+      margin-bottom: 30px;
+      background: linear-gradient(135deg, rgba(212,175,55,0.08) 0%, rgba(10,15,26,0.8) 100%);
+      border: 1px solid rgba(212,175,55,0.15);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
     .header h1 {
-      font-size: 32px;
-      background: linear-gradient(135deg, #d4af37, #f9e076);
+      font-size: 34px;
+      background: linear-gradient(135deg, #e8c678, #d4af37);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      margin-bottom: 8px;
     }
-    .header p { color: rgba(255,255,255,0.5); font-size: 15px; margin-top: 5px; }
+    .header p { color: rgba(255,255,255,0.6); font-size: 16px; }
     
-    .screen { display: none; animation: fadeUp 0.4s ease; }
+    .screen { display: none; animation: fadeUp 0.5s ease; }
     .screen.active { display: block; }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     
     .reciters-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 15px;
     }
     .reciter-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 16px;
-      padding: 20px 12px;
+      background: linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 20px;
+      padding: 25px 15px;
       text-align: center;
       cursor: pointer;
-      transition: all 0.3s;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     .reciter-card:hover {
-      background: rgba(212,175,55,0.08);
-      border-color: rgba(212,175,55,0.3);
-      transform: translateY(-3px);
+      background: rgba(212,175,55,0.05);
+      border-color: rgba(212,175,55,0.4);
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.4);
     }
-    .reciter-card .icon { font-size: 40px; color: #d4af37; display: block; margin-bottom: 8px; }
-    .reciter-card .name { font-size: 17px; font-weight: 600; color: #f0f0f0; }
+    
+    /* تصميم صور الشيوخ الحقيقية */
+    .reciter-img {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 15px;
+      display: block;
+      border: 2px solid rgba(212,175,55,0.2);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      transition: all 0.4s;
+    }
+    .reciter-card:hover .reciter-img {
+      border-color: #d4af37;
+      box-shadow: 0 8px 25px rgba(212,175,55,0.3);
+      transform: scale(1.08);
+    }
+    
+    .reciter-card .name { font-size: 17px; font-weight: 700; color: #f4f4f4; }
     
     .back-btn {
       background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
       border-radius: 30px;
       padding: 10px 20px;
       color: #e0e0e0;
       cursor: pointer;
       font-family: 'Cairo', sans-serif;
       font-size: 14px;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       display: inline-flex;
       align-items: center;
       gap: 8px;
       transition: 0.3s;
     }
-    .back-btn:hover { background: rgba(212,175,55,0.1); border-color: #d4af37; }
+    .back-btn:hover { background: rgba(212,175,55,0.15); border-color: #d4af37; color: #fff; }
     
     .reciter-title {
       text-align: center;
       padding: 15px;
-      margin-bottom: 15px;
-      border-bottom: 1px solid rgba(212,175,55,0.1);
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(212,175,55,0.15);
     }
-    .reciter-title h2 { font-size: 26px; color: #d4af37; font-family: 'Cairo', sans-serif; }
+    .reciter-title h2 { font-size: 24px; color: #d4af37; font-family: 'Cairo', sans-serif; }
     
     /* ===== تصميم مربع البحث مع زر المايك ===== */
     .search-container {
       position: relative;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
       display: flex;
-      gap: 10px;
+      gap: 12px;
       align-items: center;
     }
     .search-input-wrapper {
@@ -105,11 +126,11 @@
     }
     .search-input-wrapper input {
       width: 100%;
-      padding: 14px 45px 14px 20px;
+      padding: 15px 45px 15px 20px;
       border-radius: 30px;
-      border: 1px solid rgba(212,175,55,0.2);
+      border: 1px solid rgba(255,255,255,0.1);
       background: rgba(255,255,255,0.03);
-      color: #e0e0e0;
+      color: #fff;
       font-family: 'Cairo', sans-serif;
       font-size: 15px;
       outline: none;
@@ -118,14 +139,12 @@
     .search-input-wrapper input:focus {
       border-color: #d4af37;
       background: rgba(212,175,55,0.05);
-      box-shadow: 0 0 10px rgba(212,175,55,0.1);
+      box-shadow: 0 0 15px rgba(212,175,55,0.15);
     }
-    .search-input-wrapper input::placeholder {
-      color: rgba(255,255,255,0.3);
-    }
+    .search-input-wrapper input::placeholder { color: rgba(255,255,255,0.4); }
     .search-input-wrapper .search-icon {
       position: absolute;
-      right: 18px;
+      right: 20px;
       top: 50%;
       transform: translateY(-50%);
       color: #d4af37;
@@ -133,14 +152,13 @@
       pointer-events: none;
     }
     
-    /* زر المايك */
     .mic-btn {
       background: rgba(212,175,55,0.1);
       border: 1px solid rgba(212,175,55,0.3);
       border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      min-width: 50px;
+      width: 52px;
+      height: 52px;
+      min-width: 52px;
       color: #d4af37;
       font-size: 20px;
       cursor: pointer;
@@ -149,10 +167,7 @@
       align-items: center;
       justify-content: center;
     }
-    .mic-btn:hover {
-      background: rgba(212,175,55,0.2);
-      transform: scale(1.05);
-    }
+    .mic-btn:hover { background: rgba(212,175,55,0.2); transform: scale(1.05); box-shadow: 0 0 15px rgba(212,175,55,0.2); }
     .mic-btn.listening {
       background: #e74c3c;
       border-color: #e74c3c;
@@ -167,83 +182,85 @@
 
     .surah-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+      gap: 12px;
     }
     .surah-card {
       background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 14px;
-      padding: 12px 8px;
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 15px 10px;
       text-align: center;
       cursor: pointer;
       transition: all 0.3s;
     }
     .surah-card:hover {
       background: rgba(212,175,55,0.08);
-      border-color: rgba(212,175,55,0.3);
-      transform: translateY(-3px);
+      border-color: rgba(212,175,55,0.4);
+      transform: translateY(-4px);
     }
     .surah-card .number {
       display: inline-block;
-      background: rgba(212,175,55,0.12);
+      background: rgba(212,175,55,0.1);
       color: #d4af37;
       border-radius: 50%;
-      width: 28px;
-      height: 28px;
-      line-height: 28px;
-      font-size: 12px;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      font-size: 13px;
       font-weight: 700;
+      margin-bottom: 5px;
     }
     .surah-card .name { 
       font-family: 'Amiri', serif;
-      font-size: 18px; 
+      font-size: 19px; 
       font-weight: 700; 
-      color: #f0f0f0; 
-      margin-top: 6px; 
+      color: #f8f8f8; 
       line-height: 1.6;
     }
     
     .audio-player {
-      background: linear-gradient(145deg, rgba(20,28,43,0.9), rgba(10,15,26,0.95));
-      border: 1px solid rgba(212,175,55,0.25);
-      border-radius: 30px;
-      padding: 30px 20px;
+      background: linear-gradient(145deg, rgba(20,28,43,0.95), rgba(10,15,26,0.98));
+      border: 1px solid rgba(212,175,55,0.3);
+      border-radius: 25px;
+      padding: 35px 20px;
       text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
     }
     .audio-player .surah-name {
       font-family: 'Amiri', serif;
-      font-size: 28px;
+      font-size: 30px;
       font-weight: 700;
-      color: #d4af37;
+      color: #e8c678;
       line-height: 1.8;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
     }
     .audio-player .reciter-name {
       font-size: 16px;
-      color: #aaa;
-      margin-top: 8px;
+      color: #b0b0b0;
+      margin-top: 5px;
     }
     .audio-player audio {
       width: 100%;
       border-radius: 30px;
-      margin-top: 15px;
-      background: rgba(0,0,0,0.3);
+      margin-top: 20px;
+      background: rgba(0,0,0,0.4);
     }
     
     .audio-controls {
       display: flex;
       justify-content: center;
       gap: 15px;
-      margin-top: 15px;
+      margin-top: 20px;
       align-items: center;
       flex-wrap: wrap;
     }
     .audio-controls button {
       background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
       border-radius: 50%;
-      width: 45px;
-      height: 45px;
+      width: 48px;
+      height: 48px;
       color: #e0e0e0;
       font-size: 18px;
       cursor: pointer;
@@ -252,33 +269,34 @@
     .audio-controls button:hover {
       background: rgba(212,175,55,0.15);
       border-color: #d4af37;
+      color: #fff;
     }
     .audio-controls button.active {
-      background: #4CAF50;
+      background: rgba(76, 175, 80, 0.2);
       border-color: #4CAF50;
-      color: white;
+      color: #4CAF50;
     }
-    .audio-controls button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+    .audio-controls button:disabled { opacity: 0.5; cursor: not-allowed; }
+    
     .audio-controls select {
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(212,175,55,0.3);
       border-radius: 30px;
-      padding: 8px 15px;
+      padding: 10px 18px;
       color: #d4af37;
       font-family: 'Cairo', sans-serif;
       font-size: 14px;
       outline: none;
       cursor: pointer;
+      transition: 0.3s;
     }
-    .audio-controls select option { background: #0a0f1a; color: #e0e0e0; }
+    .audio-controls select:hover { border-color: #e8c678; }
+    .audio-controls select option { background: #080c14; color: #e0e0e0; }
     
     .empty-msg {
       text-align: center;
-      color: rgba(255,255,255,0.3);
-      padding: 40px 20px;
+      color: rgba(255,255,255,0.4);
+      padding: 50px 20px;
       font-size: 16px;
     }
     
@@ -287,7 +305,7 @@
       bottom: 25px;
       left: 25px;
       background: rgba(212,175,55,0.15);
-      border: 1px solid rgba(212,175,55,0.2);
+      border: 1px solid rgba(212,175,55,0.25);
       border-radius: 50%;
       width: 55px;
       height: 55px;
@@ -300,8 +318,9 @@
       align-items: center;
       justify-content: center;
       text-decoration: none;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     }
-    .home-btn:hover { background: rgba(212,175,55,0.25); transform: scale(1.05); }
+    .home-btn:hover { background: rgba(212,175,55,0.3); transform: scale(1.08); color: #fff; }
   </style>
 </head>
 <body style="display: none;">
@@ -410,13 +429,14 @@
     }
   });
 
+  // إضافة صور الشيوخ الموثوقة والمباشرة
   const reciters = [
-    { code: 'hussary', name: 'محمود الحصري' },
-    { code: 'basit', name: 'عبد الباسط عبد الصمد' },
-    { code: 'minsh', name: 'محمد صديق المنشاوي' },
-    { code: 'afs', name: 'مشاري العفاسي' },
-    { code: 'shur', name: 'سعود الشريم' },
-    { code: 'maher', name: 'ماهر المعيقلي' }
+    { code: 'hussary', name: 'محمود الحصري', img: 'https://i1.sndcdn.com/artworks-000100416973-1r8zqy-t500x500.jpg' },
+    { code: 'basit', name: 'عبد الباسط عبد الصمد', img: 'https://i1.sndcdn.com/artworks-000147983652-3r3shk-t500x500.jpg' },
+    { code: 'minsh', name: 'محمد صديق المنشاوي', img: 'https://i1.sndcdn.com/artworks-000216781297-f58i57-t500x500.jpg' },
+    { code: 'afs', name: 'مشاري العفاسي', img: 'https://i1.sndcdn.com/artworks-000135671151-5b7l6x-t500x500.jpg' },
+    { code: 'shur', name: 'سعود الشريم', img: 'https://i1.sndcdn.com/artworks-000146316281-7t7j2a-t500x500.jpg' },
+    { code: 'maher', name: 'ماهر المعيقلي', img: 'https://i1.sndcdn.com/artworks-000085189254-9hxhx1-t500x500.jpg' }
   ];
   
   const reciterUrls = {
@@ -445,11 +465,12 @@
     }
   }
   
+  // دالة عرض الشيوخ المحدثة لاستخدام الصور
   function showReciters() {
     const grid = document.getElementById('recitersGrid');
     grid.innerHTML = reciters.map(r => `
       <div class="reciter-card" onclick="selectReciter('${r.code}', '${r.name}')">
-        <span class="icon"><i class="fas fa-user-circle"></i></span>
+        <img src="${r.img}" alt="${r.name}" class="reciter-img" loading="lazy">
         <div class="name">${r.name}</div>
       </div>
     `).join('');
@@ -463,7 +484,6 @@
     document.getElementById('recitersScreen').classList.remove('active');
     document.getElementById('surahsScreen').classList.add('active');
     
-    // تفريغ مربع البحث عند اختيار قارئ جديد
     document.getElementById('surahSearch').value = '';
     
     showSurahs();
@@ -479,9 +499,6 @@
     `).join('');
   }
 
-  // =============================================
-  // وظيفة البحث وفلترة السور
-  // =============================================
   function filterSurahs() {
     const searchTerm = document.getElementById('surahSearch').value.trim().toLowerCase();
     const cards = document.querySelectorAll('#surahGrid .surah-card');
@@ -490,7 +507,6 @@
       const surahName = card.querySelector('.name').innerText.toLowerCase();
       const surahNumber = card.querySelector('.number').innerText;
       
-      // إزالة التشكيل من اسم السورة للمقارنة
       const cleanName = surahName.replace(/[\u064B-\u0652\u0670\u0640]/g, '');
       const cleanSearch = searchTerm.replace(/[\u064B-\u0652\u0670\u0640]/g, '');
       
@@ -502,9 +518,6 @@
     });
   }
 
-  // =============================================
-  // البحث الصوتي باستخدام Web Speech API
-  // =============================================
   function startVoiceSearch() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     
@@ -516,7 +529,6 @@
     const micBtn = document.getElementById('micBtn');
     const micIcon = document.getElementById('micIcon');
     
-    // لو بيسمع بالفعل، اقفل
     if (isListening && recognition) {
       recognition.stop();
       return;
@@ -541,11 +553,9 @@
         transcript += event.results[i][0].transcript;
       }
       
-      // نعرض النص المُلتقط في مربع البحث
       const searchInput = document.getElementById('surahSearch');
       searchInput.value = transcript;
       
-      // لو النتيجة نهائية، نفلتر
       if (event.results[event.results.length - 1].isFinal) {
         filterSurahs();
       }
@@ -566,7 +576,6 @@
       micIcon.className = 'fas fa-microphone';
       document.getElementById('surahSearch').placeholder = 'ابحث باسم السورة أو رقمها...';
       
-      // نفلتر النتيجة النهائية
       filterSurahs();
     };
     
@@ -604,7 +613,7 @@
     const btn = document.getElementById('loopBtn');
     if (isLooping) {
       btn.classList.add('active');
-      btn.innerHTML = '<i class="fas fa-repeat" style="color:#4CAF50;"></i>';
+      btn.innerHTML = '<i class="fas fa-repeat"></i>';
     } else {
       btn.classList.remove('active');
       btn.innerHTML = '<i class="fas fa-repeat"></i>';
@@ -616,9 +625,6 @@
     document.getElementById('audioElement').playbackRate = parseFloat(speed);
   }
 
-  // =============================================
-  // تحميل السورة باستخدام fetch + Blob
-  // =============================================
   async function downloadCurrentSurah() {
     const audio = document.getElementById('audioElement');
     if (!audio.src) return;
