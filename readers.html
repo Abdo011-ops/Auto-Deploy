@@ -91,14 +91,14 @@
     }
     .reciter-title h2 { font-size: 26px; color: #d4af37; }
     
-    /* تصميم مربع البحث الجديد */
+    /* تصميم مربع البحث */
     .search-container {
       position: relative;
       margin-bottom: 20px;
     }
     .search-container input {
       width: 100%;
-      padding: 14px 45px 14px 20px; /* مسافة للأيقونة على اليمين */
+      padding: 14px 45px 14px 20px;
       border-radius: 30px;
       border: 1px solid rgba(212,175,55,0.2);
       background: rgba(255,255,255,0.03);
@@ -208,6 +208,10 @@
       background: #4CAF50;
       border-color: #4CAF50;
       color: white;
+    }
+    .audio-controls button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
     .audio-controls select {
       background: rgba(255,255,255,0.05);
@@ -477,17 +481,50 @@
     document.getElementById('audioElement').playbackRate = parseFloat(speed);
   }
 
-  function downloadCurrentSurah() {
+  // =============================================
+  // تحميل السورة باستخدام fetch + Blob
+  // يحل مشكلة 404 على ويندوز ومشكلة التشغيل على سفاري iPhone
+  // =============================================
+  async function downloadCurrentSurah() {
     const audio = document.getElementById('audioElement');
     if (!audio.src) return;
     
-    const a = document.createElement('a');
-    a.href = audio.src;
-    a.target = '_blank';
-    a.download = 'Surah.mp3';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    const btn = document.getElementById('downloadBtn');
+    const originalIcon = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    btn.disabled = true;
+    
+    try {
+      // جلب الملف كـ Blob
+      const response = await fetch(audio.src, { mode: 'cors' });
+      if (!response.ok) throw new Error('فشل التحميل');
+      
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      
+      // استخراج اسم السورة والقارئ من العنوان المعروض
+      const surahName = document.getElementById('audioSurahName').textContent
+        .replace('سورة ', '').trim();
+      const reciterName = currentReciter || 'قارئ';
+      const fileName = `${surahName} - ${reciterName}.mp3`;
+      
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      
+      // تنظيف الرابط المؤقت بعد فترة
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
+      
+    } catch (err) {
+      console.error('خطأ في التحميل:', err);
+      alert('تعذر تحميل الملف، حاول مرة أخرى');
+    } finally {
+      btn.innerHTML = originalIcon;
+      btn.disabled = false;
+    }
   }
   
   document.getElementById('audioElement').addEventListener('ended', function() {
