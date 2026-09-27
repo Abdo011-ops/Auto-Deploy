@@ -322,7 +322,7 @@
       line-height: 1.7;
     }
     
-    /* ===== المشغل ===== */
+    /* ===== المشغل الرئيسي ===== */
     .player-card {
       background: linear-gradient(160deg, rgba(15,25,50,0.9), rgba(10,18,36,0.95));
       border: 1px solid var(--border-primary);
@@ -432,6 +432,42 @@
     }
     .audio-controls select option { background: #0a1224; color: var(--text); }
     
+    /* ===== المشغل العائم المصغر ===== */
+    .mini-player {
+      position: fixed;
+      bottom: 22px;
+      right: 20px;
+      left: 88px;
+      max-width: 600px;
+      background: rgba(10, 18, 36, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--border-primary);
+      border-radius: 16px;
+      padding: 10px 15px;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      z-index: 99;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      cursor: pointer;
+      animation: fadeSlide 0.3s ease;
+    }
+    .mini-info { display: flex; align-items: center; gap: 10px; overflow: hidden; }
+    .mini-icon { color: var(--primary-light); font-size: 20px; }
+    .mini-text { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+    .mini-surah { font-size: 14px; font-weight: 700; color: var(--accent); line-height: 1.3; }
+    .mini-reciter { font-size: 11px; color: var(--text-muted); }
+    .mini-play-btn {
+      width: 40px; height: 40px; min-width: 40px;
+      border-radius: 12px; background: var(--card);
+      border: 1px solid var(--border); color: #fff;
+      font-size: 15px; cursor: pointer; display: flex;
+      align-items: center; justify-content: center; transition: 0.2s;
+    }
+    .mini-play-btn:hover { border-color: var(--border-primary); color: var(--primary-light); }
+    
     /* ===== زر الهوم ===== */
     .home-btn {
       position: fixed;
@@ -462,7 +498,7 @@
     }
     
     @media (max-width: 480px) {
-      .container { padding: 16px 12px 90px; }
+      .container { padding: 16px 12px 100px; }
       .header .logo-text h1 { font-size: 17px; }
       .section-title h2 { font-size: 18px; }
       .reciters-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
@@ -470,6 +506,7 @@
       .surah-card .name { font-size: 15px; }
       .player-surah { font-size: 24px; }
       .player-card { padding: 28px 16px 20px; }
+      .mini-player { left: 82px; right: 12px; bottom: 22px; }
     }
   </style>
 </head>
@@ -481,7 +518,7 @@
     <div class="logo-box">
       <div class="logo-icon"><i class="fas fa-mosque"></i></div>
       <div class="logo-text">
-        <h1>نور القرآن</h1>
+        <h1>عبد الرحمن للخدمات الإسلامية</h1>
         <p>استمع • تأمّل • تدبّر</p>
       </div>
     </div>
@@ -557,6 +594,20 @@
         </select>
       </div>
     </div>
+  </div>
+
+  <!-- المشغل المصغر -->
+  <div class="mini-player" id="miniPlayer" onclick="openAudioScreen()">
+    <div class="mini-info">
+      <i class="fas fa-volume-up mini-icon"></i>
+      <div class="mini-text">
+        <div class="mini-surah" id="miniSurahName">السورة</div>
+        <div class="mini-reciter" id="miniReciterName">القارئ</div>
+      </div>
+    </div>
+    <button class="mini-play-btn" onclick="toggleMiniPlay(event)">
+      <i class="fas fa-pause" id="miniPlayIcon"></i>
+    </button>
   </div>
 
   <a href="index.html" class="home-btn"><i class="fas fa-home"></i></a>
@@ -638,6 +689,7 @@
     document.getElementById('surahsScreen').classList.add('active');
     document.getElementById('surahSearch').value = '';
     
+    updateMiniPlayer();
     showSurahs();
   }
   
@@ -731,11 +783,16 @@
     const surah = quranData.find(s => s.number === number);
     const cleanName = surah.name.replace('سُورَةُ ', '').replace('سورة ', '');
     
+    // تحديث أسماء السورة والقارئ في المشغل الكبير والمصغر
     document.getElementById('audioSurahName').textContent = cleanName;
     document.getElementById('audioReciterName').textContent = currentReciter;
+    document.getElementById('miniSurahName').textContent = cleanName;
+    document.getElementById('miniReciterName').textContent = currentReciter;
     
+    // تصفير إعدادات التكرار عند تشغيل سورة جديدة
     isLooping = false;
     document.getElementById('loopBtn').classList.remove('active');
+    document.getElementById('audioElement').loop = false; // الحل الجذري للتكرار
     document.getElementById('speedSelect').value = '1.0';
     
     const audio = document.getElementById('audioElement');
@@ -746,23 +803,67 @@
     
     document.getElementById('surahsScreen').classList.remove('active');
     document.getElementById('audioScreen').classList.add('active');
+    updateMiniPlayer();
   }
   
-  document.getElementById('audioElement').addEventListener('play', function() {
+  // مزامنة حالة التشغيل والإيقاف لتغيير شكل الأيقونات
+  const audioEl = document.getElementById('audioElement');
+  audioEl.addEventListener('play', function() {
     document.getElementById('playerArt').classList.add('playing');
+    document.getElementById('miniPlayIcon').className = 'fas fa-pause';
   });
-  document.getElementById('audioElement').addEventListener('pause', function() {
+  audioEl.addEventListener('pause', function() {
     document.getElementById('playerArt').classList.remove('playing');
+    document.getElementById('miniPlayIcon').className = 'fas fa-play';
   });
   
+  // وظيفة التكرار الجديدة الموثوقة لجميع المتصفحات
   function toggleLoop() {
     isLooping = !isLooping;
     document.getElementById('loopBtn').classList.toggle('active', isLooping);
+    document.getElementById('audioElement').loop = isLooping; 
   }
+  
+  // إرجاع وظيفة الاحتياط القديمة تحسباً لأي خطأ في النظام
+  audioEl.addEventListener('ended', function() {
+    if (isLooping && !this.loop) { this.currentTime = 0; this.play(); }
+  });
   
   function changeSpeed() {
     const speed = document.getElementById('speedSelect').value;
     document.getElementById('audioElement').playbackRate = parseFloat(speed);
+  }
+
+  // =============================================
+  // وظائف المشغل المصغر (Mini Player)
+  // =============================================
+  function updateMiniPlayer() {
+    const mini = document.getElementById('miniPlayer');
+    const audioScreenActive = document.getElementById('audioScreen').classList.contains('active');
+    const audio = document.getElementById('audioElement');
+    
+    if (!audioScreenActive && audio.src && audio.src !== window.location.href) {
+      mini.style.display = 'flex';
+    } else {
+      mini.style.display = 'none';
+    }
+  }
+
+  function toggleMiniPlay(event) {
+    event.stopPropagation(); // عشان المشغل الكبير ميفتحش لما تدوس على زرار التشغيل
+    const audio = document.getElementById('audioElement');
+    if (audio.paused) {
+      audio.play();
+    } else {
+      audio.pause();
+    }
+  }
+
+  function openAudioScreen() {
+    document.getElementById('recitersScreen').classList.remove('active');
+    document.getElementById('surahsScreen').classList.remove('active');
+    document.getElementById('audioScreen').classList.add('active');
+    updateMiniPlayer();
   }
 
   // =============================================
@@ -775,7 +876,6 @@
     const btn = document.getElementById('downloadBtn');
     const originalIcon = btn.innerHTML;
     
-    // تصغير الخط ليتناسب مع كتابة النسبة المئوية
     btn.style.fontSize = '14px';
     btn.style.fontWeight = 'bold';
     btn.disabled = true;
@@ -814,8 +914,7 @@
         alert('تعذر تحميل الملف، حاول مرة أخرى');
       }
       
-      // إرجاع الزر لشكله الأصلي
-      btn.style.fontSize = ''; // للعودة لخصائص الـ CSS الافتراضية
+      btn.style.fontSize = ''; 
       btn.innerHTML = originalIcon;
       btn.disabled = false;
     };
@@ -830,18 +929,16 @@
     xhr.send();
   }
   
-  document.getElementById('audioElement').addEventListener('ended', function() {
-    if (isLooping) { this.currentTime = 0; this.play(); }
-  });
-  
   function goBack() {
     document.getElementById('surahsScreen').classList.remove('active');
     document.getElementById('recitersScreen').classList.add('active');
+    updateMiniPlayer();
   }
   
   function goBackToSurahs() {
     document.getElementById('audioScreen').classList.remove('active');
     document.getElementById('surahsScreen').classList.add('active');
+    updateMiniPlayer();
   }
   
   loadSurahs();
