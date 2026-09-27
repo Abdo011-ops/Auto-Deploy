@@ -55,7 +55,7 @@
     .container {
       max-width: 780px;
       margin: 0 auto;
-      padding: 20px 16px 100px;
+      padding: 20px 16px 150px; /* زيادة المسافة السفلية لتجنب تغطية المحتوى */
       position: relative;
       z-index: 1;
     }
@@ -435,9 +435,10 @@
     /* ===== المشغل العائم المصغر ===== */
     .mini-player {
       position: fixed;
-      bottom: 22px;
+      bottom: 85px; /* تم رفعه ليكون فوق زر الهوم */
       right: 20px;
-      left: 88px;
+      left: 20px; /* يأخذ مساحة الشاشة بشكل متناسق */
+      margin: 0 auto;
       max-width: 600px;
       background: rgba(10, 18, 36, 0.95);
       backdrop-filter: blur(10px);
@@ -471,8 +472,9 @@
     /* ===== زر الهوم ===== */
     .home-btn {
       position: fixed;
-      bottom: 22px;
-      left: 22px;
+      bottom: 20px; /* مسافة من الأسفل */
+      left: 50%; /* توسيط الزرار */
+      transform: translateX(-50%); /* ضبط التوسيط تماماً */
       width: 52px;
       height: 52px;
       border-radius: 16px;
@@ -487,7 +489,9 @@
       transition: 0.3s;
       z-index: 100;
     }
-    .home-btn:hover { transform: translateY(-3px) scale(1.05); }
+    .home-btn:hover { 
+      transform: translateX(-50%) translateY(-3px) scale(1.05); /* الحفاظ على التوسيط مع حركة الـ hover */
+    }
     
     .empty-msg {
       text-align: center;
@@ -498,7 +502,7 @@
     }
     
     @media (max-width: 480px) {
-      .container { padding: 16px 12px 100px; }
+      .container { padding: 16px 12px 140px; }
       .header .logo-text h1 { font-size: 17px; }
       .section-title h2 { font-size: 18px; }
       .reciters-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
@@ -506,7 +510,7 @@
       .surah-card .name { font-size: 15px; }
       .player-surah { font-size: 24px; }
       .player-card { padding: 28px 16px 20px; }
-      .mini-player { left: 82px; right: 12px; bottom: 22px; }
+      .mini-player { left: 16px; right: 16px; bottom: 85px; }
     }
   </style>
 </head>
@@ -518,7 +522,8 @@
     <div class="logo-box">
       <div class="logo-icon"><i class="fas fa-mosque"></i></div>
       <div class="logo-text">
-        <h1>عبد الرحمن للخدمات الإسلامية</h1>
+        <!-- تم إرجاع الاسم إلى نور القرآن -->
+        <h1>نور القرآن</h1>
         <p>استمع • تأمّل • تدبّر</p>
       </div>
     </div>
@@ -610,6 +615,7 @@
     </button>
   </div>
 
+  <!-- زر الهوم الموسط -->
   <a href="index.html" class="home-btn"><i class="fas fa-home"></i></a>
 </div>
 
@@ -783,16 +789,14 @@
     const surah = quranData.find(s => s.number === number);
     const cleanName = surah.name.replace('سُورَةُ ', '').replace('سورة ', '');
     
-    // تحديث أسماء السورة والقارئ في المشغل الكبير والمصغر
     document.getElementById('audioSurahName').textContent = cleanName;
     document.getElementById('audioReciterName').textContent = currentReciter;
     document.getElementById('miniSurahName').textContent = cleanName;
     document.getElementById('miniReciterName').textContent = currentReciter;
     
-    // تصفير إعدادات التكرار عند تشغيل سورة جديدة
     isLooping = false;
     document.getElementById('loopBtn').classList.remove('active');
-    document.getElementById('audioElement').loop = false; // الحل الجذري للتكرار
+    document.getElementById('audioElement').loop = false;
     document.getElementById('speedSelect').value = '1.0';
     
     const audio = document.getElementById('audioElement');
@@ -806,7 +810,6 @@
     updateMiniPlayer();
   }
   
-  // مزامنة حالة التشغيل والإيقاف لتغيير شكل الأيقونات
   const audioEl = document.getElementById('audioElement');
   audioEl.addEventListener('play', function() {
     document.getElementById('playerArt').classList.add('playing');
@@ -817,14 +820,12 @@
     document.getElementById('miniPlayIcon').className = 'fas fa-play';
   });
   
-  // وظيفة التكرار الجديدة الموثوقة لجميع المتصفحات
   function toggleLoop() {
     isLooping = !isLooping;
     document.getElementById('loopBtn').classList.toggle('active', isLooping);
     document.getElementById('audioElement').loop = isLooping; 
   }
   
-  // إرجاع وظيفة الاحتياط القديمة تحسباً لأي خطأ في النظام
   audioEl.addEventListener('ended', function() {
     if (isLooping && !this.loop) { this.currentTime = 0; this.play(); }
   });
@@ -834,9 +835,6 @@
     document.getElementById('audioElement').playbackRate = parseFloat(speed);
   }
 
-  // =============================================
-  // وظائف المشغل المصغر (Mini Player)
-  // =============================================
   function updateMiniPlayer() {
     const mini = document.getElementById('miniPlayer');
     const audioScreenActive = document.getElementById('audioScreen').classList.contains('active');
@@ -850,7 +848,7 @@
   }
 
   function toggleMiniPlay(event) {
-    event.stopPropagation(); // عشان المشغل الكبير ميفتحش لما تدوس على زرار التشغيل
+    event.stopPropagation();
     const audio = document.getElementById('audioElement');
     if (audio.paused) {
       audio.play();
@@ -866,9 +864,6 @@
     updateMiniPlayer();
   }
 
-  // =============================================
-  // وظيفة التحميل بنظام النسبة المئوية
-  // =============================================
   function downloadCurrentSurah() {
     const audio = document.getElementById('audioElement');
     if (!audio.src) return;
