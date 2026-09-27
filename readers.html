@@ -444,7 +444,7 @@
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--border-primary);
-      border-radius: 30px; /* جعلنا الحواف دائرية أكثر */
+      border-radius: 30px; 
       padding: 10px 18px;
       display: none;
       align-items: center;
@@ -602,7 +602,6 @@
     </div>
   </div>
 
-  <!-- المشغل المصغر بعد التعديل (أزرار تبديل + تكرار + حواف دائرية) -->
   <div class="mini-player" id="miniPlayer" onclick="openAudioScreen()">
     <div class="mini-info">
       <i class="fas fa-book-open mini-icon"></i>
@@ -666,7 +665,7 @@
   let quranData = [];
   let currentReciter = null;
   let currentReciterCode = null;
-  let currentSurahNumber = null; // لتتبع رقم السورة للتبديل
+  let currentSurahNumber = null;
   let isLooping = false;
   let recognition = null;
   let isListening = false;
@@ -714,16 +713,22 @@
     `).join('');
   }
 
+  // تم تحديث فلتر إزالة التشكيل القرآني بالكامل
+  function getCleanText(text) {
+    // إزالة جميع الحركات وعلامات الوقف القرآنية بدقة
+    return text.replace(/[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06ED]/g, '');
+  }
+
   function filterSurahs() {
-    const searchTerm = document.getElementById('surahSearch').value.trim().toLowerCase();
+    const searchTerm = getCleanText(document.getElementById('surahSearch').value.trim()).toLowerCase();
     const cards = document.querySelectorAll('#surahGrid .surah-card');
     let visible = 0;
     
     cards.forEach(card => {
-      const surahName = card.querySelector('.name').innerText.toLowerCase();
+      let surahName = card.querySelector('.name').innerText.toLowerCase();
       const surahNumber = card.querySelector('.number').innerText;
-      const cleanName = surahName.replace(/[\u064B-\u0652\u0670\u0640]/g, '');
-      const cleanSearch = searchTerm.replace(/[\u064B-\u0652\u0670\u0640]/g, '');
+      const cleanName = getCleanText(surahName).replace(/ٱ/g, 'ا');
+      const cleanSearch = searchTerm.replace(/ٱ/g, 'ا');
       
       if (cleanName.includes(cleanSearch) || surahNumber.includes(cleanSearch)) {
         card.style.display = 'flex';
@@ -736,10 +741,10 @@
     document.getElementById('surahsCount').textContent = visible + ' سورة';
   }
 
-  // دالة لتنظيف اسم السورة من التشكيل وإضافة كلمة "سورة" ليكون الخط واضح وجميل
+  // دالة متطورة لتنظيف وتنسيق اسم السورة للمشغل
   function getCleanSurahTitle(originalName) {
-    let clean = originalName.replace(/[\u0617-\u061A\u064B-\u0652\u0670]/g, ''); // إزالة التشكيل
-    clean = clean.replace(/ٱ/g, 'ا'); // تصحيح همزة الوصل
+    let clean = getCleanText(originalName); // مسح التشكيل بالكامل
+    clean = clean.replace(/ٱ/g, 'ا'); // تحويل همزة الوصل لألف عادية
     if (!clean.includes('سورة')) {
       clean = 'سورة ' + clean.trim();
     }
@@ -751,7 +756,6 @@
     const url = `${reciterUrls[currentReciterCode]}/${String(number).padStart(3, '0')}.mp3`;
     const surah = quranData.find(s => s.number === number);
     
-    // استخدام دالة التنظيف للحصول على اسم واضح للسورة
     const cleanName = getCleanSurahTitle(surah.name);
     
     document.getElementById('audioSurahName').textContent = cleanName;
@@ -776,7 +780,6 @@
     updateMiniPlayer();
   }
 
-  // وظائف أزرار التبديل (السورة السابقة والتالية)
   function playNextSurah(event) {
     if (event) event.stopPropagation();
     if (currentSurahNumber && currentSurahNumber < 114) {
@@ -803,13 +806,12 @@
     document.getElementById('miniPlayIcon').className = 'fas fa-play';
   });
   
-  // التشغيل التلقائي للسورة التالية عند الانتهاء (إذا لم يكن التكرار مفعل)
   audioEl.addEventListener('ended', function() {
     if (isLooping && !this.loop) { 
       this.currentTime = 0; 
       this.play(); 
     } else if (!isLooping) {
-      playNextSurah(null); // تشغيل السورة التي تليها تلقائياً
+      playNextSurah(null); 
     }
   });
   
