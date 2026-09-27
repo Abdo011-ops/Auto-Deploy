@@ -55,7 +55,7 @@
     .container {
       max-width: 780px;
       margin: 0 auto;
-      padding: 20px 16px 150px; /* زيادة المسافة السفلية لتجنب تغطية المحتوى */
+      padding: 20px 16px 110px; /* مسافة سفلية مناسبة للمشغل المصغر */
       position: relative;
       z-index: 1;
     }
@@ -435,63 +435,61 @@
     /* ===== المشغل العائم المصغر ===== */
     .mini-player {
       position: fixed;
-      bottom: 85px; /* تم رفعه ليكون فوق زر الهوم */
+      bottom: 25px;
       right: 20px;
-      left: 20px; /* يأخذ مساحة الشاشة بشكل متناسق */
+      left: 20px;
       margin: 0 auto;
       max-width: 600px;
       background: rgba(10, 18, 36, 0.95);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--border-primary);
-      border-radius: 16px;
-      padding: 10px 15px;
+      border-radius: 30px; /* جعلنا الحواف دائرية أكثر */
+      padding: 10px 18px;
       display: none;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
       z-index: 99;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
       cursor: pointer;
       animation: fadeSlide 0.3s ease;
     }
-    .mini-info { display: flex; align-items: center; gap: 10px; overflow: hidden; }
-    .mini-icon { color: var(--primary-light); font-size: 20px; }
+    .mini-info { display: flex; align-items: center; gap: 12px; overflow: hidden; flex: 1; }
+    .mini-icon { color: var(--primary-light); font-size: 22px; }
     .mini-text { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-    .mini-surah { font-size: 14px; font-weight: 700; color: var(--accent); line-height: 1.3; }
-    .mini-reciter { font-size: 11px; color: var(--text-muted); }
-    .mini-play-btn {
-      width: 40px; height: 40px; min-width: 40px;
-      border-radius: 12px; background: var(--card);
-      border: 1px solid var(--border); color: #fff;
-      font-size: 15px; cursor: pointer; display: flex;
-      align-items: center; justify-content: center; transition: 0.2s;
-    }
-    .mini-play-btn:hover { border-color: var(--border-primary); color: var(--primary-light); }
+    .mini-surah { font-size: 14.5px; font-weight: 700; color: var(--accent); line-height: 1.3; }
+    .mini-reciter { font-size: 11.5px; color: var(--text-muted); }
     
-    /* ===== زر الهوم ===== */
-    .home-btn {
-      position: fixed;
-      bottom: 20px; /* مسافة من الأسفل */
-      left: 50%; /* توسيط الزرار */
-      transform: translateX(-50%); /* ضبط التوسيط تماماً */
-      width: 52px;
-      height: 52px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: #fff;
-      font-size: 20px;
+    /* أزرار المشغل المصغر */
+    .mini-controls {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .mini-controls button {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s;
       display: flex;
       align-items: center;
       justify-content: center;
-      text-decoration: none;
-      box-shadow: 0 8px 25px rgba(59,130,246,0.4);
-      transition: 0.3s;
-      z-index: 100;
+      padding: 5px;
     }
-    .home-btn:hover { 
-      transform: translateX(-50%) translateY(-3px) scale(1.05); /* الحفاظ على التوسيط مع حركة الـ hover */
+    .mini-controls button:hover { color: var(--primary-light); transform: scale(1.1); }
+    .mini-controls button.active { color: var(--green); }
+    
+    .mini-controls .mini-play-btn {
+      width: 42px; height: 42px; min-width: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      box-shadow: 0 4px 10px rgba(59,130,246,0.3);
     }
+    .mini-controls .mini-play-btn:hover { color: #fff; }
     
     .empty-msg {
       text-align: center;
@@ -502,7 +500,7 @@
     }
     
     @media (max-width: 480px) {
-      .container { padding: 16px 12px 140px; }
+      .container { padding: 16px 12px 100px; }
       .header .logo-text h1 { font-size: 17px; }
       .section-title h2 { font-size: 18px; }
       .reciters-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
@@ -510,7 +508,11 @@
       .surah-card .name { font-size: 15px; }
       .player-surah { font-size: 24px; }
       .player-card { padding: 28px 16px 20px; }
-      .mini-player { left: 16px; right: 16px; bottom: 85px; }
+      .mini-player { left: 12px; right: 12px; bottom: 20px; padding: 10px 14px; }
+      .mini-controls { gap: 10px; }
+      .mini-controls button { font-size: 14px; }
+      .mini-controls .mini-play-btn { width: 38px; height: 38px; }
+      .mini-surah { font-size: 13.5px; }
     }
   </style>
 </head>
@@ -522,7 +524,6 @@
     <div class="logo-box">
       <div class="logo-icon"><i class="fas fa-mosque"></i></div>
       <div class="logo-text">
-        <!-- تم إرجاع الاسم إلى نور القرآن -->
         <h1>نور القرآن</h1>
         <p>استمع • تأمّل • تدبّر</p>
       </div>
@@ -583,13 +584,13 @@
       </audio>
       
       <div class="audio-controls">
-        <button id="loopBtn" onclick="toggleLoop()" title="تكرار">
+        <button id="loopBtn" onclick="toggleLoop(event)" title="تكرار السورة">
           <i class="fas fa-repeat"></i>
         </button>
-        <button id="downloadBtn" onclick="downloadCurrentSurah()" title="تحميل">
+        <button id="downloadBtn" onclick="downloadCurrentSurah()" title="تحميل السورة">
           <i class="fas fa-download"></i>
         </button>
-        <select id="speedSelect" onchange="changeSpeed()">
+        <select id="speedSelect" onchange="changeSpeed()" title="سرعة التشغيل">
           <option value="0.5">0.5x</option>
           <option value="0.75">0.75x</option>
           <option value="1.0" selected>1.0x</option>
@@ -601,22 +602,25 @@
     </div>
   </div>
 
-  <!-- المشغل المصغر -->
+  <!-- المشغل المصغر بعد التعديل (أزرار تبديل + تكرار + حواف دائرية) -->
   <div class="mini-player" id="miniPlayer" onclick="openAudioScreen()">
     <div class="mini-info">
-      <i class="fas fa-volume-up mini-icon"></i>
+      <i class="fas fa-book-open mini-icon"></i>
       <div class="mini-text">
         <div class="mini-surah" id="miniSurahName">السورة</div>
         <div class="mini-reciter" id="miniReciterName">القارئ</div>
       </div>
     </div>
-    <button class="mini-play-btn" onclick="toggleMiniPlay(event)">
-      <i class="fas fa-pause" id="miniPlayIcon"></i>
-    </button>
+    <div class="mini-controls">
+      <button id="miniLoopBtn" onclick="toggleLoop(event)" title="تكرار السورة"><i class="fas fa-repeat"></i></button>
+      <button onclick="playPrevSurah(event)" title="السورة السابقة"><i class="fas fa-step-forward"></i></button>
+      <button class="mini-play-btn" onclick="toggleMiniPlay(event)">
+        <i class="fas fa-pause" id="miniPlayIcon"></i>
+      </button>
+      <button onclick="playNextSurah(event)" title="السورة التالية"><i class="fas fa-step-backward"></i></button>
+    </div>
   </div>
 
-  <!-- زر الهوم الموسط -->
-  <a href="index.html" class="home-btn"><i class="fas fa-home"></i></a>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -662,6 +666,7 @@
   let quranData = [];
   let currentReciter = null;
   let currentReciterCode = null;
+  let currentSurahNumber = null; // لتتبع رقم السورة للتبديل
   let isLooping = false;
   let recognition = null;
   let isListening = false;
@@ -731,63 +736,23 @@
     document.getElementById('surahsCount').textContent = visible + ' سورة';
   }
 
-  function startVoiceSearch() {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    
-    if (!SpeechRecognition) {
-      alert('متصفحك لا يدعم البحث الصوتي');
-      return;
+  // دالة لتنظيف اسم السورة من التشكيل وإضافة كلمة "سورة" ليكون الخط واضح وجميل
+  function getCleanSurahTitle(originalName) {
+    let clean = originalName.replace(/[\u0617-\u061A\u064B-\u0652\u0670]/g, ''); // إزالة التشكيل
+    clean = clean.replace(/ٱ/g, 'ا'); // تصحيح همزة الوصل
+    if (!clean.includes('سورة')) {
+      clean = 'سورة ' + clean.trim();
     }
-    
-    const micBtn = document.getElementById('micBtn');
-    const micIcon = document.getElementById('micIcon');
-    
-    if (isListening && recognition) {
-      recognition.stop();
-      return;
-    }
-    
-    recognition = new SpeechRecognition();
-    recognition.lang = 'ar-SA';
-    recognition.continuous = false;
-    recognition.interimResults = true;
-    
-    recognition.onstart = () => {
-      isListening = true;
-      micBtn.classList.add('listening');
-      micIcon.className = 'fas fa-stop';
-      document.getElementById('surahSearch').placeholder = '🎤 جاري الاستماع...';
-    };
-    
-    recognition.onresult = (event) => {
-      let transcript = '';
-      for (let i = event.resultIndex; i < event.results.length; i++) {
-        transcript += event.results[i][0].transcript;
-      }
-      document.getElementById('surahSearch').value = transcript;
-      if (event.results[event.results.length - 1].isFinal) filterSurahs();
-    };
-    
-    recognition.onerror = (event) => {
-      console.error(event.error);
-      if (event.error === 'not-allowed') alert('يجب السماح بالوصول للميكروفون');
-    };
-    
-    recognition.onend = () => {
-      isListening = false;
-      micBtn.classList.remove('listening');
-      micIcon.className = 'fas fa-microphone';
-      document.getElementById('surahSearch').placeholder = 'ابحث باسم السورة أو رقمها...';
-      filterSurahs();
-    };
-    
-    try { recognition.start(); } catch(e) { console.error(e); }
+    return clean;
   }
   
   function playSurah(number) {
+    currentSurahNumber = number;
     const url = `${reciterUrls[currentReciterCode]}/${String(number).padStart(3, '0')}.mp3`;
     const surah = quranData.find(s => s.number === number);
-    const cleanName = surah.name.replace('سُورَةُ ', '').replace('سورة ', '');
+    
+    // استخدام دالة التنظيف للحصول على اسم واضح للسورة
+    const cleanName = getCleanSurahTitle(surah.name);
     
     document.getElementById('audioSurahName').textContent = cleanName;
     document.getElementById('audioReciterName').textContent = currentReciter;
@@ -796,6 +761,7 @@
     
     isLooping = false;
     document.getElementById('loopBtn').classList.remove('active');
+    document.getElementById('miniLoopBtn').classList.remove('active');
     document.getElementById('audioElement').loop = false;
     document.getElementById('speedSelect').value = '1.0';
     
@@ -809,26 +775,51 @@
     document.getElementById('audioScreen').classList.add('active');
     updateMiniPlayer();
   }
+
+  // وظائف أزرار التبديل (السورة السابقة والتالية)
+  function playNextSurah(event) {
+    if (event) event.stopPropagation();
+    if (currentSurahNumber && currentSurahNumber < 114) {
+      playSurah(currentSurahNumber + 1);
+    }
+  }
+
+  function playPrevSurah(event) {
+    if (event) event.stopPropagation();
+    if (currentSurahNumber && currentSurahNumber > 1) {
+      playSurah(currentSurahNumber - 1);
+    }
+  }
   
   const audioEl = document.getElementById('audioElement');
+  
   audioEl.addEventListener('play', function() {
     document.getElementById('playerArt').classList.add('playing');
     document.getElementById('miniPlayIcon').className = 'fas fa-pause';
   });
+  
   audioEl.addEventListener('pause', function() {
     document.getElementById('playerArt').classList.remove('playing');
     document.getElementById('miniPlayIcon').className = 'fas fa-play';
   });
   
-  function toggleLoop() {
+  // التشغيل التلقائي للسورة التالية عند الانتهاء (إذا لم يكن التكرار مفعل)
+  audioEl.addEventListener('ended', function() {
+    if (isLooping && !this.loop) { 
+      this.currentTime = 0; 
+      this.play(); 
+    } else if (!isLooping) {
+      playNextSurah(null); // تشغيل السورة التي تليها تلقائياً
+    }
+  });
+  
+  function toggleLoop(event) {
+    if (event) event.stopPropagation();
     isLooping = !isLooping;
     document.getElementById('loopBtn').classList.toggle('active', isLooping);
+    document.getElementById('miniLoopBtn').classList.toggle('active', isLooping);
     document.getElementById('audioElement').loop = isLooping; 
   }
-  
-  audioEl.addEventListener('ended', function() {
-    if (isLooping && !this.loop) { this.currentTime = 0; this.play(); }
-  });
   
   function changeSpeed() {
     const speed = document.getElementById('speedSelect').value;
@@ -934,6 +925,49 @@
     document.getElementById('audioScreen').classList.remove('active');
     document.getElementById('surahsScreen').classList.add('active');
     updateMiniPlayer();
+  }
+  
+  function startVoiceSearch() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert('متصفحك لا يدعم البحث الصوتي');
+      return;
+    }
+    const micBtn = document.getElementById('micBtn');
+    const micIcon = document.getElementById('micIcon');
+    if (isListening && recognition) {
+      recognition.stop();
+      return;
+    }
+    recognition = new SpeechRecognition();
+    recognition.lang = 'ar-SA';
+    recognition.continuous = false;
+    recognition.interimResults = true;
+    recognition.onstart = () => {
+      isListening = true;
+      micBtn.classList.add('listening');
+      micIcon.className = 'fas fa-stop';
+      document.getElementById('surahSearch').placeholder = '🎤 جاري الاستماع...';
+    };
+    recognition.onresult = (event) => {
+      let transcript = '';
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        transcript += event.results[i][0].transcript;
+      }
+      document.getElementById('surahSearch').value = transcript;
+      if (event.results[event.results.length - 1].isFinal) filterSurahs();
+    };
+    recognition.onerror = (event) => {
+      if (event.error === 'not-allowed') alert('يجب السماح بالوصول للميكروفون');
+    };
+    recognition.onend = () => {
+      isListening = false;
+      micBtn.classList.remove('listening');
+      micIcon.className = 'fas fa-microphone';
+      document.getElementById('surahSearch').placeholder = 'ابحث باسم السورة أو رقمها...';
+      filterSurahs();
+    };
+    try { recognition.start(); } catch(e) {}
   }
   
   loadSurahs();
